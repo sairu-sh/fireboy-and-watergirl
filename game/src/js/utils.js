@@ -52,3 +52,20 @@ function detectCollision({ object1, object2 }) {
     object1.position.y <= object2.position.y + object2.height
   );
 }
+
+
+const cropbox = {
+  position: {
+    x: 0,
+    y: 0,
+  },
+  width: 0,
+  height: 0,
+};
+
+function setCropboxAttributes({ position, width, height }) {
+  cropbox.position = position;
+  cropbox.width = width;
+  cropbox.height = height;
+}
+
