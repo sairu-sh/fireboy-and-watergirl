@@ -4,7 +4,8 @@ class Platform {
     this.width = width;
     this.height = height;
     this.image = new Image();
-    this.image.src = "../../../spritesheet/block.png";
+    const blockNum = randomNumGenerator(1, 5);
+    this.image.src = `../../../spritesheet/groundBlocks/block${blockNum}.svg`;
   }
   drawPlatform() {
     ctx.drawImage(
