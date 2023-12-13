@@ -4,15 +4,16 @@ class Pool {
     this.width = width;
     this.height = height;
     this.type = type;
+    this.image = new Image();
     switch (this.type) {
       case "water":
-        this.color = "blue";
+        this.image.src = "../../../spritesheet/pools/waterpool.svg";
         break;
       case "fire":
-        this.color = "red";
+        this.image.src = "../../../spritesheet/pools/lavapool.svg";
         break;
       case "goo":
-        this.color = "green";
+        this.image.src = "../../../spritesheet/pools/goo.svg";
         break;
     }
     // this.boundingPlatform = new Platform({
@@ -27,8 +28,13 @@ class Pool {
   }
 
   drawPool() {
-    ctx.fillStyle = this.color;
-    ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+    ctx.drawImage(
+      this.image,
+      this.position.x,
+      this.position.y,
+      this.width,
+      this.height
+    );
   }
 }
 
