@@ -53,7 +53,9 @@ function detectCollision({ object1, object2 }) {
   );
 }
 
-
+/**
+ * cropbox to crop a fixed area from a spritesheet from (x, y)
+ */
 const cropbox = {
   position: {
     x: 0,
@@ -63,9 +65,17 @@ const cropbox = {
   height: 0,
 };
 
+/**'
+ * @param {number} position
+ * @param {number} width
+ * @param {number} height
+ */
 function setCropboxAttributes({ position, width, height }) {
   cropbox.position = position;
   cropbox.width = width;
   cropbox.height = height;
 }
 
+function randomNumGenerator(min, max) {
+  return min + Math.floor(Math.random() * (max - min + 1));
+}
