@@ -54,9 +54,9 @@ class MovingPlatforms {
       case "verticalDown":
         if (isPushed) {
           if (this.position.y < this.originalY + this.maxDisplacement)
-            this.position.y += 2;
+            this.position.y += 0.4;
         } else {
-          if (this.position.y > this.originalY) this.position.y -= 2;
+          if (this.position.y > this.originalY) this.position.y -= 0.4;
         }
 
         break;
@@ -76,19 +76,19 @@ class MovingPlatforms {
       setCropboxAttributes({
         position: {
           x: 1,
-          y: 1,
+          y: 21,
         },
         width: 277,
-        height: 94,
+        height: 60,
       });
     } else {
       setCropboxAttributes({
         position: {
           x: 300,
-          y: 1,
+          y: 21,
         },
         width: 305,
-        height: 94,
+        height: 60,
       });
     }
 
@@ -103,8 +103,6 @@ class MovingPlatforms {
       this.width,
       30
     );
-    // ctx.fillStyle = this.color;
-    // ctx.fillRect(this.position.x, this.position.y, 20, 20);
   }
 }
 
