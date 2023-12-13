@@ -25,9 +25,11 @@ class Character {
         this.isPushingBlock ? (fireBoy.vx = -2) : (fireBoy.vx = -SPEEDX);
       this.position.x += this.vx;
       this.horizontalCollisionWithPlatforms();
+      this.horizontalCollisionWithMovingPlatforms();
       this.horizontalCollisionWithBlock();
       this.applyGravity();
       this.verticalCollisionWithPlatforms();
+      this.verticalCollisionWithMovingPlatforms();
       this.verticalCollisionWithBlock();
     } else {
       if (!watergirlMovement.right && !watergirlMovement.left) waterGirl.vx = 0;
@@ -37,9 +39,11 @@ class Character {
         this.isPushingBlock ? (waterGirl.vx = -2) : (waterGirl.vx = -SPEEDX);
       this.position.x += this.vx;
       this.horizontalCollisionWithPlatforms();
+      this.horizontalCollisionWithMovingPlatforms();
       this.horizontalCollisionWithBlock();
       this.applyGravity();
       this.verticalCollisionWithPlatforms();
+      this.verticalCollisionWithMovingPlatforms();
       this.verticalCollisionWithBlock();
     }
   }
@@ -118,6 +122,43 @@ class Character {
     }
   }
 
+  horizontalCollisionWithMovingPlatforms() {
+    for (let i = 0; i < movingPlatformsArray.length; i++) {
+      let platform = movingPlatformsArray[i];
+      if (detectCollision({ object1: this, object2: platform })) {
+        console.log("hi");
+        if (this.vx < 0) {
+          this.vx = 0;
+          this.position.x = platform.position.x + platform.width + 0.01;
+        }
+        if (this.vx > 0) {
+          this.vx = 0;
+          this.position.x = platform.position.x - this.width - 0.01;
+        }
+      }
+    }
+  }
+
+  verticalCollisionWithMovingPlatforms() {
+    for (let i = 0; i < movingPlatformsArray.length; i++) {
+      let platform = movingPlatformsArray[i];
+      if (detectCollision({ object1: this, object2: platform })) {
+        if (this.vy < 0) {
+          console.log("hi");
+          this.vy = 0;
+          this.position.y = platform.position.y + platform.height + 0.01;
+        }
+        if (this.vy > 0) {
+          this.vy = 0;
+          this.position.y = platform.position.y - this.height - 0.01;
+        }
+        this.element == "fire"
+          ? (fireboyMovement.isGrounded = true)
+          : (watergirlMovement.isGrounded = true);
+      }
+    }
+  }
+
   /**
    * check if the character is colliding with the top of a platform and make it land there if it does
    */
@@ -132,19 +173,20 @@ class Character {
   // }
 
   collisionWithPools(pool) {
-    if (this.element == "fire") {
-      if (pool.type == "fire") {
-        return;
-      } else {
-        if (detectCollision({ object1: this, object2: pool })) {
+    if (detectCollision({ object1: this, object2: pool })) {
+      if (this.element == "fire") {
+        if (pool.type == "fire") {
+          this.image.src = "../../../";
+          this.position.y = pool.position.y - this.height - 0.01;
+        } else {
           this.width = this.height = 0;
         }
-      }
-    } else {
-      if (pool.type == "water") {
-        return;
       } else {
-        if (detectCollision({ object1: this, object2: pool })) {
+        if (pool.type == "water") {
+          this.vy = 0;
+          watergirlMovement.isGrounded = true;
+          this.position.y = pool.position.y - this.height - 0.01;
+        } else {
           this.width = this.height = 0;
         }
       }
@@ -232,7 +274,7 @@ class Character {
 
   setFireboyCropbox() {
     if (this.vx == 0 && fireboyMovement.isGrounded) {
-      this.image.src = "../../../spritesheet/fire_boy_character.png";
+      this.image.src = "../../../spritesheet/characters/fire_boy_character.png";
       setCropboxAttributes({
         position: {
           x: 0,
@@ -242,7 +284,7 @@ class Character {
         height: 59,
       });
     } else if (this.vy < 0 && fireboyMovement.right) {
-      this.image.src = "../../../spritesheet/fbSpriteFinal.svg";
+      this.image.src = "../../../spritesheet/characters/fbSpriteFinal.svg";
       setCropboxAttributes({
         position: {
           x: 887,
@@ -252,7 +294,7 @@ class Character {
         height: 124,
       });
     } else if (this.vy < 0 && fireboyMovement.left) {
-      this.image.src = "../../../spritesheet/fbSpriteFinal.svg";
+      this.image.src = "../../../spritesheet/characters/fbSpriteFinal.svg";
       setCropboxAttributes({
         position: {
           x: 785,
@@ -262,7 +304,7 @@ class Character {
         height: 111,
       });
     } else if (fireboyMovement.left) {
-      this.image.src = "../../../spritesheet/fire boy_run left.gif";
+      this.image.src = "../../../spritesheet/characters/fire boy_run left.gif";
       setCropboxAttributes({
         position: {
           x: 1,
@@ -272,7 +314,7 @@ class Character {
         height: 60,
       });
     } else if (fireboyMovement.right) {
-      this.image.src = "../../../spritesheet/fire boy_run right.gif";
+      this.image.src = "../../../spritesheet/characters/fire boy_run right.gif";
       setCropboxAttributes({
         position: {
           x: -10,
@@ -282,7 +324,7 @@ class Character {
         height: 60,
       });
     } else if (this.vy < 0) {
-      this.image.src = "../../../spritesheet/fbSpriteFinal.svg";
+      this.image.src = "../../../spritesheet/characters/fbSpriteFinal.svg";
       setCropboxAttributes({
         position: {
           x: 591,
@@ -292,7 +334,7 @@ class Character {
         height: 109,
       });
     } else if (this.vy > 0) {
-      this.image.src = "../../../spritesheet/fbSpriteFinal.svg";
+      this.image.src = "../../../spritesheet/characters/fbSpriteFinal.svg";
       setCropboxAttributes({
         position: {
           x: 680,
@@ -305,7 +347,7 @@ class Character {
   }
 
   setWatergirlCropbox() {
-    this.image.src = "../../../spritesheet/wgSpriteFinal.svg";
+    this.image.src = "../../../spritesheet/characters/wgSpriteFinal.svg";
     if (this.vx == 0 && watergirlMovement.isGrounded) {
       setCropboxAttributes({
         position: {
