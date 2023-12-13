@@ -1,9 +1,9 @@
 const fireBoy = new Character({
-  position: { x: 200, y: myCanvas.height - 80 },
+  position: { x: 200, y: myCanvas.height - 100 },
   element: "fire",
 });
 const waterGirl = new Character({
-  position: { x: 400, y: myCanvas.height - 80 },
+  position: { x: 400, y: myCanvas.height - 100 },
   element: "water",
 });
 
@@ -13,21 +13,34 @@ tile.draw();
 
 function animate() {
   ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+  ctx.drawImage(background, 0, 0, myCanvas.width, myCanvas.height);
   // fireBoy.collisionWithEdgeWalls();
   // waterGirl.collisionWithEdgeWalls();
   fireBoy.draw(ctx);
   waterGirl.draw(ctx);
+
   for (let i = 0; i < poolArray.length; i++) {
     poolArray[i].drawPool();
     fireBoy.collisionWithPools(poolArray[i]);
     waterGirl.collisionWithPools(poolArray[i]);
   }
+
   for (let i = 0; i < pushersArray.length; i++) {
     pushersArray[i].drawPusher();
-    if (
-      detectCollision({ object1: fireBoy, object2: pushersArray[i] }) ||
-      detectCollision({ object1: waterGirl, object2: pushersArray[i] })
-    ) {
+
+    const isFireBoyColliding = detectCollision({
+      object1: fireBoy,
+      object2: pushersArray[i],
+    });
+    const isWaterGirlColliding = detectCollision({
+      object1: waterGirl,
+      object2: pushersArray[i],
+    });
+    const isBlockColliding = blockArray.some((block) =>
+      detectCollision({ object1: block, object2: pushersArray[i] })
+    );
+
+    if (isFireBoyColliding || isWaterGirlColliding || isBlockColliding) {
       pushersArray[i].pusherPushed();
     } else {
       pushersArray[i].pusherNotPushed();
@@ -35,6 +48,8 @@ function animate() {
   }
 
   movingPlatformsArray.forEach((platform) => {
+    // platform.collisionWithCharacter(fireBoy);
+    // platform.collisionWithCharacter(waterGirl);
     platform.drawPlatform();
     let matchingPushers = pushersArray.filter((pusher) => {
       return pusher.color === platform.color && pusher.isPushed;
@@ -48,6 +63,22 @@ function animate() {
       platform.movePlatform(false);
     }
   });
+
+  // blockArray.forEach((block) => {
+  //   block.update();
+  //   pushersArray.forEach((pusher) => {
+  //     if (detectCollision({ object1: block, object2: pusher })) {
+  //       pusher.pusherPushed();
+  //     }
+  //   });
+  // });
+
+  diamondsArray.forEach((dia) => {
+    dia.update();
+    dia.collisionWithCharacter(fireBoy);
+    dia.collisionWithCharacter(waterGirl);
+  });
+
   fireBoy.update();
   waterGirl.update();
   // fireBoy.landingOnPlatforms();
@@ -55,30 +86,30 @@ function animate() {
   // console.log(fireboyMovement.isGrounded);
 
   // Set the number of rows and columns in your map
-  let numRows = Math.floor(myCanvas.height / tileSize);
-  let numCols = Math.floor(myCanvas.width / tileSize);
+  // let numRows = Math.floor(myCanvas.height / tileSize);
+  // let numCols = Math.floor(myCanvas.width / tileSize);
 
-  // Draw grid lines
-  ctx.strokeStyle = "#ccc"; // Set the color of the grid lines
-  ctx.lineWidth = 1;
+  // // Draw grid lines
+  // ctx.strokeStyle = "#ccc"; // Set the color of the grid lines
+  // ctx.lineWidth = 1;
 
-  for (let i = 1; i < numRows; i++) {
-    // Draw horizontal lines
-    let y = i * tileSize;
-    ctx.beginPath();
-    ctx.moveTo(0, y);
-    ctx.lineTo(myCanvas.width, y);
-    ctx.stroke();
-  }
+  // for (let i = 1; i < numRows; i++) {
+  //   // Draw horizontal lines
+  //   let y = i * tileSize;
+  //   ctx.beginPath();
+  //   ctx.moveTo(0, y);
+  //   ctx.lineTo(myCanvas.width, y);
+  //   ctx.stroke();
+  // }
 
-  for (let j = 1; j < numCols; j++) {
-    // Draw vertical lines
-    let x = j * tileSize;
-    ctx.beginPath();
-    ctx.moveTo(x, 0);
-    ctx.lineTo(x, myCanvas.height);
-    ctx.stroke();
-  }
+  // for (let j = 1; j < numCols; j++) {
+  //   // Draw vertical lines
+  //   let x = j * tileSize;
+  //   ctx.beginPath();
+  //   ctx.moveTo(x, 0);
+  //   ctx.lineTo(x, myCanvas.height);
+  //   ctx.stroke();
+  // }
 
   requestAnimationFrame(animate);
 }
