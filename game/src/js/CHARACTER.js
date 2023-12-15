@@ -120,10 +120,10 @@ class Character {
         if (this.vy > 0) {
           this.vy = 0;
           this.position.y = platform.position.y - this.height - 0.01;
+          this.element == "fire"
+            ? (fireboyMovement.isGrounded = true)
+            : (watergirlMovement.isGrounded = true);
         }
-        this.element == "fire"
-          ? (fireboyMovement.isGrounded = true)
-          : (watergirlMovement.isGrounded = true);
       }
     }
   }
