@@ -1,5 +1,5 @@
 const fireBoy = new Character({
-  position: { x: 200, y: myCanvas.height - 100 },
+  position: { x: 200, y: myCanvas.height - 40 },
   element: "fire",
 });
 const waterGirl = new Character({
@@ -7,7 +7,7 @@ const waterGirl = new Character({
   element: "water",
 });
 
-let tileSize = 20; // Adjust this based on your needs
+let tileSize = 32;
 let tile = new TileMap(tileSize);
 tile.draw();
 
@@ -16,8 +16,8 @@ function animate() {
   ctx.drawImage(background, 0, 0, myCanvas.width, myCanvas.height);
   // fireBoy.collisionWithEdgeWalls();
   // waterGirl.collisionWithEdgeWalls();
-  fireBoy.draw(ctx);
-  waterGirl.draw(ctx);
+  fireBoy.draw();
+  waterGirl.draw();
 
   for (let i = 0; i < poolArray.length; i++) {
     poolArray[i].drawPool();
