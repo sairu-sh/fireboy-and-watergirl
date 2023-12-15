@@ -157,10 +157,10 @@ class Character {
         if (this.vy > 0) {
           this.vy = 0;
           this.position.y = platform.position.y - this.height - 0.01;
+          this.element == "fire"
+            ? (fireboyMovement.isGrounded = true)
+            : (watergirlMovement.isGrounded = true);
         }
-        this.element == "fire"
-          ? (fireboyMovement.isGrounded = true)
-          : (watergirlMovement.isGrounded = true);
       }
     }
   }
@@ -182,7 +182,6 @@ class Character {
     if (detectCollision({ object1: this, object2: pool })) {
       if (this.element == "fire") {
         if (pool.type == "fire") {
-          this.image.src = "../../../";
           this.position.y = pool.position.y - this.height - 0.01;
         } else {
           this.width = this.height = 0;
