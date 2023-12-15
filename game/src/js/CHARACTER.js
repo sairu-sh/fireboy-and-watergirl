@@ -6,11 +6,17 @@ class Character {
     this.element = element;
     this.initialVelocity = -5;
     this.image = new Image();
+    this.image.src =
+      this.element == "fire"
+        ? "../../../spritesheet/characters/fb.png"
+        : "../../../spritesheet/characters/wg.png";
     this.color = this.element == "fire" ? "red" : "blue";
     this.vx = SPEEDX;
     this.vy = SPEEDY;
     this.isPushingBlock = false;
     fireboyMovement.isGrounded = watergirlMovement.isGrounded = false;
+    this.frame = 0;
+    this.totalFrames = 7;
   }
 
   update() {
@@ -251,7 +257,7 @@ class Character {
    * to render the relevant character image
    * @param {context} ctx
    */
-  draw(ctx) {
+  draw() {
     // console.log(this.vx);
     if (this.element == "fire") this.setFireboyCropbox();
     else this.setWatergirlCropbox();
@@ -274,142 +280,174 @@ class Character {
 
   setFireboyCropbox() {
     if (this.vx == 0 && fireboyMovement.isGrounded) {
-      this.image.src = "../../../spritesheet/characters/fire_boy_character.png";
       setCropboxAttributes({
         position: {
           x: 0,
           y: 0,
         },
-        width: 35,
+        width: 40,
         height: 59,
       });
     } else if (this.vy < 0 && fireboyMovement.right) {
-      this.image.src = "../../../spritesheet/characters/fbSpriteFinal.svg";
       setCropboxAttributes({
         position: {
-          x: 887,
-          y: 9,
-        },
-        width: 76,
-        height: 124,
-      });
-    } else if (this.vy < 0 && fireboyMovement.left) {
-      this.image.src = "../../../spritesheet/characters/fbSpriteFinal.svg";
-      setCropboxAttributes({
-        position: {
-          x: 785,
-          y: 9,
-        },
-        width: 92,
-        height: 111,
-      });
-    } else if (fireboyMovement.left) {
-      this.image.src = "../../../spritesheet/characters/fire boy_run left.gif";
-      setCropboxAttributes({
-        position: {
-          x: 1,
-          y: 1,
-        },
-        width: 40,
-        height: 60,
-      });
-    } else if (fireboyMovement.right) {
-      this.image.src = "../../../spritesheet/characters/fire boy_run right.gif";
-      setCropboxAttributes({
-        position: {
-          x: -10,
-          y: 1,
-        },
-        width: 60,
-        height: 60,
-      });
-    } else if (this.vy < 0) {
-      this.image.src = "../../../spritesheet/characters/fbSpriteFinal.svg";
-      setCropboxAttributes({
-        position: {
-          x: 591,
-          y: 24,
-        },
-        width: 72,
-        height: 109,
-      });
-    } else if (this.vy > 0) {
-      this.image.src = "../../../spritesheet/characters/fbSpriteFinal.svg";
-      setCropboxAttributes({
-        position: {
-          x: 680,
+          x: 845,
           y: 0,
         },
-        width: 81,
-        height: 142,
+        width: 40,
+        height: 55,
+      });
+    } else if (this.vy < 0 && fireboyMovement.left) {
+      setCropboxAttributes({
+        position: {
+          x: 800,
+          y: 0,
+        },
+        width: 40,
+        height: 55,
+      });
+    } else if (this.vy > 0.4 && fireboyMovement.right) {
+      setCropboxAttributes({
+        position: {
+          x: 925,
+          y: 0,
+        },
+        width: 40,
+        height: 55,
+      });
+    } else if (this.vy > 0.4 && fireboyMovement.left) {
+      setCropboxAttributes({
+        position: {
+          x: 885,
+          y: 0,
+        },
+        width: 40,
+        height: 55,
+      });
+    } else if (fireboyMovement.left) {
+      fbFrameCounter = (fbFrameCounter + 1) % framesPerUpdate;
+      setCropboxAttributes(fbCurrentAnimationFrames[fbAnimationFrame]);
+
+      if (fbFrameCounter === 0) {
+        fbAnimationFrame =
+          fbAnimationFrame >= fbCurrentAnimationFrames.length - 1
+            ? 0
+            : fbAnimationFrame + 1;
+      }
+    } else if (fireboyMovement.right) {
+      fbFrameCounter = (fbFrameCounter + 1) % framesPerUpdate;
+      setCropboxAttributes(fbCurrentAnimationFrames[fbAnimationFrame]);
+
+      if (fbFrameCounter === 0) {
+        fbAnimationFrame =
+          fbAnimationFrame >= fbCurrentAnimationFrames.length - 1
+            ? 0
+            : fbAnimationFrame + 1;
+      }
+    } else if (this.vy < 0) {
+      setCropboxAttributes({
+        position: {
+          x: 965,
+          y: 0,
+        },
+        width: 35,
+        height: 50,
+      });
+    } else if (this.vy > 0) {
+      setCropboxAttributes({
+        position: {
+          x: 1005,
+          y: 0,
+        },
+        width: 35,
+        height: 55,
       });
     }
   }
 
   setWatergirlCropbox() {
-    this.image.src = "../../../spritesheet/characters/wgSpriteFinal.svg";
     if (this.vx == 0 && watergirlMovement.isGrounded) {
       setCropboxAttributes({
         position: {
-          x: 15,
-          y: 37,
+          x: 0,
+          y: 0,
         },
-        width: 74,
-        height: 130,
+        width: 57,
+        height: 50,
       });
     } else if (this.vy < 0 && watergirlMovement.right) {
       setCropboxAttributes({
         position: {
-          x: 880,
-          y: 45,
+          x: 1085,
+          y: 0,
         },
-        width: 150,
-        height: 100,
+        width: 30,
+        height: 50,
       });
     } else if (this.vy < 0 && watergirlMovement.left) {
       setCropboxAttributes({
         position: {
-          x: 1000,
-          y: 34,
+          x: 1130,
+          y: 0,
         },
-        width: 135,
-        height: 95,
+        width: 40,
+        height: 50,
+      });
+    } else if (this.vy > 0.4 && watergirlMovement.right) {
+      setCropboxAttributes({
+        position: {
+          x: 1230,
+          y: 0,
+        },
+        width: 39,
+        height: 55,
+      });
+    } else if (this.vy > 0.4 && watergirlMovement.left) {
+      setCropboxAttributes({
+        position: {
+          x: 1175,
+          y: 0,
+        },
+        width: 40,
+        height: 52,
       });
     } else if (watergirlMovement.left) {
-      setCropboxAttributes({
-        position: {
-          x: 440,
-          y: 41,
-        },
-        width: 123,
-        height: 120,
-      });
+      wgFrameCounter = (wgFrameCounter + 1) % framesPerUpdate;
+      setCropboxAttributes(wgCurrentAnimationFrames[wgAnimationFrame]);
+
+      if (wgFrameCounter === 0) {
+        wgAnimationFrame =
+          wgAnimationFrame >= wgCurrentAnimationFrames.length - 1
+            ? 0
+            : wgAnimationFrame + 1;
+      }
     } else if (watergirlMovement.right) {
-      setCropboxAttributes({
-        position: {
-          x: 110,
-          y: 45,
-        },
-        width: 127,
-        height: 120,
-      });
+      wgFrameCounter = (wgFrameCounter + 1) % framesPerUpdate;
+      setCropboxAttributes(wgCurrentAnimationFrames[wgAnimationFrame]);
+
+      if (wgFrameCounter === 0) {
+        wgAnimationFrame =
+          wgAnimationFrame >= wgCurrentAnimationFrames.length - 1
+            ? 0
+            : wgAnimationFrame + 1;
+      }
     } else if (this.vy < 0) {
       setCropboxAttributes({
         position: {
-          x: 712,
-          y: 36,
+          x: 985,
+          y: 0,
         },
-        width: 75,
-        height: 125,
+        width: 50,
+        height: 50,
       });
     } else if (this.vy > 0) {
       setCropboxAttributes({
         position: {
-          x: 802,
+          x: 1030,
           y: 10,
         },
-        width: 75,
-        height: 144,
+        width: 40,
+        height: 40,
       });
     }
   }
