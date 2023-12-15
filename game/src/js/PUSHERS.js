@@ -28,8 +28,8 @@ class Pusher {
       cropbox.height,
       this.position.x,
       this.position.y,
-      40,
-      40
+      32,
+      64
     );
     // ctx.fillStyle = this.color;
     // ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
