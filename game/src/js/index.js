@@ -48,14 +48,11 @@ function animate() {
   }
 
   movingPlatformsArray.forEach((platform) => {
-    // platform.collisionWithCharacter(fireBoy);
-    // platform.collisionWithCharacter(waterGirl);
     platform.drawPlatform();
     let matchingPushers = pushersArray.filter((pusher) => {
       return pusher.color === platform.color && pusher.isPushed;
     });
     if (matchingPushers.length > 0) {
-      // console.log(matchingPushers);
       matchingPushers.forEach(() => {
         platform.movePlatform(true);
       });
@@ -77,6 +74,12 @@ function animate() {
     dia.update();
     dia.collisionWithCharacter(fireBoy);
     dia.collisionWithCharacter(waterGirl);
+  });
+
+  leverArray.forEach((lever) => {
+    lever.checkOverlapWithCharacter(fireBoy);
+    lever.checkOverlapWithCharacter(waterGirl);
+    lever.update();
   });
 
   fireBoy.update();

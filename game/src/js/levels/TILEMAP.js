@@ -21,6 +21,8 @@ class TileMap {
    * 30: big block
    * 35:blue diamond
    * 36: red diamond
+   * 40: yellow lever triggered left to right
+   * 41: yellow lever triggered right to left
    */
   map = [
     [
@@ -100,8 +102,8 @@ class TileMap {
       0, 0, 0, 0, 35, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1,
     ],
     [
-      1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1,
+      1, 0, 0, 0, 0, 0, 0, 0, 0, 41, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1,
     ],
     [
       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 0, 0, 0, 0, 1, 1, 1,
@@ -222,6 +224,30 @@ class TileMap {
               })
             );
             break;
+          case 40:
+            leverArray.push(
+              new Lever({
+                position: {
+                  x: column * this.tileSize,
+                  y: row * this.tileSize,
+                },
+                color: "yellow",
+                trigger: "leftToRight",
+              })
+            );
+            break;
+          case 41:
+            leverArray.push(
+              new Lever({
+                position: {
+                  x: column * this.tileSize,
+                  y: row * this.tileSize,
+                },
+                color: "yellow",
+                trigger: "rightToLeft",
+              })
+            );
+            break;
           default:
             break;
         }
@@ -229,3 +255,5 @@ class TileMap {
     }
   }
 }
+
+console.log(leverArray);
