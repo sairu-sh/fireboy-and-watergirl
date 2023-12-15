@@ -9,5 +9,5 @@
 .lever {
   height: 70px;
   width: 60px;
-  /* transform: rotate(-70deg); */
+  transform: rotate(15deg);
 }

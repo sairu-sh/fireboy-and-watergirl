@@ -10,7 +10,7 @@ class MovingPlatforms {
     this.originalY = this.position.y;
     this.maxDisplacement = 96;
     this.image = new Image();
-    this.image.src = "../../../spritesheet/purplePlatform.svg";
+    this.image.src = "../../../spritesheet/mechanisms/purplePlatform.svg";
     this.active = false;
   }
 
