@@ -1,19 +1,32 @@
-const fireBoy = new Character({
-  position: { x: 200, y: myCanvas.height - 40 },
-  element: "fire",
-});
-const waterGirl = new Character({
-  position: { x: 400, y: myCanvas.height - 100 },
-  element: "water",
-});
-
 let tileSize = 32;
 let tile = new TileMap(tileSize);
 tile.draw();
 
+let gameWon = false;
+let gameOver = false;
+
+let fireBoy;
+let waterGirl;
+
+characters.forEach((character) => {
+  if (character.element == "fire") fireBoy = character;
+  else waterGirl = character;
+});
+
 function animate() {
   ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
   ctx.drawImage(background, 0, 0, myCanvas.width, myCanvas.height);
+
+  doorArray.forEach((door) => {
+    door.drawDoors();
+    door.isOpen(fireBoy);
+    door.isOpen(waterGirl);
+  });
+
+  if (doorArray[0].open && doorArray[1].open) {
+    gameWon = true;
+    // setTimeout
+  }
   // fireBoy.collisionWithEdgeWalls();
   // waterGirl.collisionWithEdgeWalls();
   fireBoy.draw();
@@ -106,6 +119,7 @@ function animate() {
 
   fireBoy.update();
   waterGirl.update();
+
   // fireBoy.landingOnPlatforms();
   // waterGirl.landingOnPlatforms();
   // console.log(fireboyMovement.isGrounded);

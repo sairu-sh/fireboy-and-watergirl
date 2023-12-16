@@ -27,6 +27,10 @@ class TileMap {
    * 51: yellow rightMovingPlatform triggered by lever
    * 52: yellow upMovingPlatform triggered by lever
    * 53: yellow DownMovingPlatform triggered by lever
+   * 60: fireboy's door
+   * 61: watergirl's door
+   * 99: fireboy
+   * 100: watergirl
    */
   map = [
     [
@@ -38,8 +42,8 @@ class TileMap {
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
     ],
     [
-      1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+      1, 0, 61, 0, 0, 0, 0, 60, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
     ],
     [
       1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -90,8 +94,8 @@ class TileMap {
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
     ],
     [
-      1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 4, 0, 0,
-      0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1,
+      1, 0, 0, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 4, 0,
+      0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1,
     ],
     [
       1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -106,8 +110,8 @@ class TileMap {
       0, 0, 0, 0, 35, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1,
     ],
     [
-      1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1,
+      1, 0, 0, 99, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1,
     ],
     [
       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 0, 0, 0, 0, 1, 1, 1,
@@ -348,6 +352,48 @@ class TileMap {
               })
             );
             break;
+          case 60:
+            doorArray.push(
+              new Doors({
+                position: {
+                  x: column * this.tileSize,
+                  y: row * this.tileSize,
+                },
+                width: this.tileSize * 3,
+                height: this.tileSize * 3,
+                element: "fire",
+              })
+            );
+            break;
+          case 61:
+            doorArray.push(
+              new Doors({
+                position: {
+                  x: column * this.tileSize,
+                  y: row * this.tileSize,
+                },
+                width: this.tileSize * 3,
+                height: this.tileSize * 3,
+                element: "water",
+              })
+            );
+            break;
+          case 99:
+            characters.push(
+              new Character({
+                position: { x: column * this.tileSize, y: row * this.tileSize },
+                element: "fire",
+              })
+            );
+            break;
+          case 100:
+            characters.push(
+              new Character({
+                position: { x: column * this.tileSize, y: row * this.tileSize },
+                element: "water",
+              })
+            );
+            break;
           default:
             break;
         }
@@ -355,5 +401,3 @@ class TileMap {
     }
   }
 }
-
-console.log(movingPlatformsArray);

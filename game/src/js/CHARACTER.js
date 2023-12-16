@@ -132,7 +132,6 @@ class Character {
     for (let i = 0; i < movingPlatformsArray.length; i++) {
       let platform = movingPlatformsArray[i];
       if (detectCollision({ object1: this, object2: platform })) {
-        console.log("hi");
         if (this.vx < 0) {
           this.vx = 0;
           this.position.x = platform.position.x + platform.width + 0.01;
@@ -268,8 +267,8 @@ class Character {
       cropbox.height,
       this.position.x,
       this.position.y,
-      50,
-      50
+      this.width,
+      this.height
     );
 
     ctx.fillStyle = "transparent";
@@ -451,3 +450,5 @@ class Character {
     }
   }
 }
+
+let characters = [];

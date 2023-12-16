@@ -23,7 +23,6 @@ class Lever {
 
   checkOverlapWithCharacter(character) {
     if (detectCollision({ object1: character, object2: this.handleX })) {
-      console.log("hi");
       character.isPushingBlock = true;
       if (
         character.vx > 0 &&
