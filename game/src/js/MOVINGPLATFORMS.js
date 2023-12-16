@@ -5,12 +5,15 @@ class MovingPlatforms {
     this.color = color;
     this.movement = movement;
     this.width = width;
-    this.height = 20;
+    this.height = 30;
     this.originalX = this.position.x;
     this.originalY = this.position.y;
     this.maxDisplacement = 96;
     this.image = new Image();
-    this.image.src = "../../../spritesheet/mechanisms/purplePlatform.svg";
+    this.image.src =
+      this.trigger == "pusher"
+        ? "../../../spritesheet/mechanisms/purplePlatform.png"
+        : "../../../spritesheet/mechanisms/yellowPlatform.png";
     this.active = false;
   }
 
@@ -62,10 +65,11 @@ class MovingPlatforms {
         break;
       case "verticalUp":
         if (isPushed) {
-          if (this.position.y > this.originalY - this.maxDisplacement)
+          if (this.position.y >= this.originalY - this.maxDisplacement) {
             this.position.y -= 2;
+          }
         } else {
-          if (this.position.y < this.originalY) this.position.y += 2;
+          if (this.position.y <= this.originalY) this.position.y += 2;
         }
         break;
     }
@@ -75,20 +79,20 @@ class MovingPlatforms {
     if (this.active) {
       setCropboxAttributes({
         position: {
-          x: 1,
-          y: 21,
+          x: 0,
+          y: 3,
         },
-        width: 277,
-        height: 60,
+        width: 163,
+        height: 30,
       });
     } else {
       setCropboxAttributes({
         position: {
-          x: 300,
-          y: 21,
+          x: 187,
+          y: 3,
         },
-        width: 305,
-        height: 60,
+        width: 163,
+        height: 30,
       });
     }
 
@@ -101,7 +105,7 @@ class MovingPlatforms {
       this.position.x,
       this.position.y,
       this.width,
-      30
+      this.height
     );
   }
 }

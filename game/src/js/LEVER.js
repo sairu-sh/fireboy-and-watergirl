@@ -2,7 +2,7 @@ class Lever {
   constructor({ position, color, trigger }) {
     this.position = position;
     this.color = color;
-    this.active = false;
+    this.isActive = false;
     this.image = new Image();
     this.image.src = "../../../spritesheet/mechanisms/lever.png";
     this.trigger = trigger;
@@ -23,6 +23,8 @@ class Lever {
 
   checkOverlapWithCharacter(character) {
     if (detectCollision({ object1: character, object2: this.handleX })) {
+      console.log("hi");
+      character.isPushingBlock = true;
       if (
         character.vx > 0 &&
         this.handleX.position.x + this.handleX.width <=
@@ -30,23 +32,26 @@ class Lever {
       )
         this.handleX.position.x = character.position.x + character.width + 0.01;
       else if (character.vx < 0 && this.handleX.position.x >= this.position.x)
-        this.handleX.position.x = character.position.x - 0.01;
+        this.handleX.position.x =
+          character.position.x - this.handleX.width - 0.01;
+    } else {
+      character.isPushingBlock = false;
     }
 
     if (this.trigger == "rightToLeft") {
-      if (this.handleX.position.x < this.position.x + this.width / 2)
-        this.active = true;
-      else this.active = false;
+      if (this.handleX.position.x <= this.position.x + this.width / 2)
+        this.isActive = true;
+      else this.isActive = false;
     } else {
       if (this.handleX.position.x > this.position.x + this.width / 2)
-        this.active = true;
-      else this.active = false;
+        this.isActive = true;
+      else this.isActive = false;
     }
   }
 
   update() {
     if (this.trigger == "leftToRight") {
-      if (this.handleX.position.x < this.position.x + this.width / 4) {
+      if (this.handleX.position.x <= this.position.x + this.width / 4) {
         setCropboxAttributes({
           position: {
             x: 0,
@@ -57,23 +62,56 @@ class Lever {
         });
       }
     } else {
-      if (this.handleX.position.x > this.position.x + (this.width * 3) / 4) {
+      if (this.handleX.position.x > this.position.x + this.width * 0.8) {
         setCropboxAttributes({
           position: {
             x: 0,
             y: 0,
           },
           width: 70,
-          height: 150,
+          height: 140,
         });
-      } else if (this.handleX.position.x >= this.position.x + this.width) {
+      } else if (this.handleX.position.x > this.position.x + this.width * 0.6) {
         setCropboxAttributes({
           position: {
-            x: 0,
+            x: 90,
             y: 0,
           },
           width: 70,
-          height: 150,
+          height: 140,
+        });
+      } else if (
+        this.handleX.position.x >=
+        this.position.x + this.width * 0.4
+      ) {
+        setCropboxAttributes({
+          position: {
+            x: 175,
+            y: 0,
+          },
+          width: 70,
+          height: 140,
+        });
+      } else if (
+        this.handleX.position.x >=
+        this.position.x + this.width * 0.2
+      ) {
+        setCropboxAttributes({
+          position: {
+            x: 260,
+            y: 0,
+          },
+          width: 70,
+          height: 130,
+        });
+      } else {
+        setCropboxAttributes({
+          position: {
+            x: 345,
+            y: 0,
+          },
+          width: 70,
+          height: 130,
         });
       }
     }

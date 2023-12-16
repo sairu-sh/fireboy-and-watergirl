@@ -14,15 +14,19 @@ class TileMap {
    * 7: green pusher
    * 8: pink pusher
    * 10: lever
-   * 16: yellow leftMovingPlatform
-   * 17: yellow rightMovingPlatform
-   * 18: yellow upMovingPlatform
-   * 19: yellow DownMovingPlatform
+   * 16: purple leftMovingPlatform triggered by pusher
+   * 17: purple rightMovingPlatform triggered by pusher
+   * 18: purple upMovingPlatform triggered by pusher
+   * 19: purple DownMovingPlatform triggered by pusher
    * 30: big block
    * 35:blue diamond
    * 36: red diamond
    * 40: yellow lever triggered left to right
    * 41: yellow lever triggered right to left
+   * 50: yellow leftMovingPlatform triggered by lever
+   * 51: yellow rightMovingPlatform triggered by lever
+   * 52: yellow upMovingPlatform triggered by lever
+   * 53: yellow DownMovingPlatform triggered by lever
    */
   map = [
     [
@@ -58,11 +62,11 @@ class TileMap {
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
     ],
     [
-      1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+      1, 53, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
     ],
     [
-      1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
+      1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
     ],
     [
@@ -70,12 +74,12 @@ class TileMap {
       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
     ],
     [
-      1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
     ],
     [
-      1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+      1, 0, 0, 0, 0, 0, 0, 0, 0, 41, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
     ],
     [
       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -102,8 +106,8 @@ class TileMap {
       0, 0, 0, 0, 35, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1,
     ],
     [
-      1, 0, 0, 0, 0, 0, 0, 0, 0, 41, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1,
+      1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1,
     ],
     [
       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 0, 0, 0, 0, 1, 1, 1,
@@ -178,6 +182,47 @@ class TileMap {
               })
             );
             break;
+          case 16:
+            movingPlatformsArray.push(
+              new MovingPlatforms({
+                position: {
+                  x: column * this.tileSize,
+                  y: row * this.tileSize,
+                },
+                width: 128,
+                trigger: "pusher",
+                color: "purple",
+                movement: "horizontalLeft",
+              })
+            );
+          case 17:
+            movingPlatformsArray.push(
+              new MovingPlatforms({
+                position: {
+                  x: column * this.tileSize,
+                  y: row * this.tileSize,
+                },
+                width: 128,
+                trigger: "pusher",
+                color: "purple",
+                movement: "horizontalRight",
+              })
+            );
+            break;
+          case 18:
+            movingPlatformsArray.push(
+              new MovingPlatforms({
+                position: {
+                  x: column * this.tileSize,
+                  y: row * this.tileSize,
+                },
+                width: 128,
+                trigger: "pusher",
+                color: "purple",
+                movement: "verticalUp",
+              })
+            );
+            break;
           case 19:
             movingPlatformsArray.push(
               new MovingPlatforms({
@@ -248,6 +293,61 @@ class TileMap {
               })
             );
             break;
+          case 50:
+            movingPlatformsArray.push(
+              new MovingPlatforms({
+                position: {
+                  x: column * this.tileSize,
+                  y: row * this.tileSize,
+                },
+                width: 128,
+                trigger: "lever",
+                color: "yellow",
+                movement: "horizontalLeft",
+              })
+            );
+          case 51:
+            movingPlatformsArray.push(
+              new MovingPlatforms({
+                position: {
+                  x: column * this.tileSize,
+                  y: row * this.tileSize,
+                },
+                width: 128,
+                trigger: "lever",
+                color: "yellow",
+                movement: "horizontalRight",
+              })
+            );
+            break;
+          case 52:
+            movingPlatformsArray.push(
+              new MovingPlatforms({
+                position: {
+                  x: column * this.tileSize,
+                  y: row * this.tileSize,
+                },
+                width: 128,
+                trigger: "lever",
+                color: "yellow",
+                movement: "verticalUp",
+              })
+            );
+            break;
+          case 53:
+            movingPlatformsArray.push(
+              new MovingPlatforms({
+                position: {
+                  x: column * this.tileSize,
+                  y: row * this.tileSize,
+                },
+                width: 128,
+                trigger: "lever",
+                color: "yellow",
+                movement: "verticalDown",
+              })
+            );
+            break;
           default:
             break;
         }
@@ -256,4 +356,4 @@ class TileMap {
   }
 }
 
-console.log(leverArray);
+console.log(movingPlatformsArray);

@@ -47,19 +47,47 @@ function animate() {
     }
   }
 
-  movingPlatformsArray.forEach((platform) => {
-    platform.drawPlatform();
-    let matchingPushers = pushersArray.filter((pusher) => {
-      return pusher.color === platform.color && pusher.isPushed;
-    });
-    if (matchingPushers.length > 0) {
-      matchingPushers.forEach(() => {
-        platform.movePlatform(true);
-      });
-    } else {
-      platform.movePlatform(false);
-    }
+  leverArray.forEach((lever) => {
+    lever.checkOverlapWithCharacter(fireBoy);
+    lever.checkOverlapWithCharacter(waterGirl);
+    lever.update();
   });
+
+  movingPlatformsArray
+    .filter((platform) => {
+      return platform.trigger == "pusher";
+    })
+    .forEach((platform) => {
+      platform.drawPlatform();
+      let matchingPushers = pushersArray.filter((pusher) => {
+        return pusher.color === platform.color && pusher.isPushed;
+      });
+      if (matchingPushers.length > 0) {
+        matchingPushers.forEach(() => {
+          platform.movePlatform(true);
+        });
+      } else {
+        platform.movePlatform(false);
+      }
+    });
+
+  movingPlatformsArray
+    .filter((platform) => {
+      return platform.trigger == "lever";
+    })
+    .forEach((platform) => {
+      platform.drawPlatform();
+      let matchingLevers = leverArray.filter((lever) => {
+        return lever.color === platform.color && lever.isActive;
+      });
+      if (matchingLevers.length > 0) {
+        matchingLevers.forEach(() => {
+          platform.movePlatform(true);
+        });
+      } else {
+        platform.movePlatform(false);
+      }
+    });
 
   // blockArray.forEach((block) => {
   //   block.update();
@@ -74,12 +102,6 @@ function animate() {
     dia.update();
     dia.collisionWithCharacter(fireBoy);
     dia.collisionWithCharacter(waterGirl);
-  });
-
-  leverArray.forEach((lever) => {
-    lever.checkOverlapWithCharacter(fireBoy);
-    lever.checkOverlapWithCharacter(waterGirl);
-    lever.update();
   });
 
   fireBoy.update();
