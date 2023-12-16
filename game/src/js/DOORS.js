@@ -26,6 +26,7 @@ class Doors {
 
   drawDoors() {
     if (gameWon && !gameOver) {
+      door.play();
       if (this.element == "fire") {
         this.image.src = "../../../spritesheet/doors/fbDoor.png";
         this.fbDoorAnimation();
@@ -81,7 +82,7 @@ class Doors {
   wgDoorAnimation() {
     if (currentWgDoor <= wgDoorAnimationFrames.length - 1) {
       setCropboxAttributes(wgDoorAnimationFrames[currentWgDoor]);
-      this.frameCounter = (this.frameCounter + 1) % framesPerUpdate;
+      this.frameCounter = (this.frameCounter + 1) % 15;
 
       if (this.frameCounter === 0) {
         currentWgDoor++;

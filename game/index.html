@@ -7,7 +7,44 @@
     <link rel="stylesheet" href="./src/styles/style.css" />
   </head>
   <body>
-    <canvas id="mycanvas" height="672" width="1280"></canvas>
+    <div class="intro" id="menu">
+      <div class="container">
+        <img
+          src="./../spritesheet/intro/TempleHallForest.jpg"
+          alt="templeHall"
+          class="background"
+        />
+        <img
+          src="./../spritesheet/text/GameTitle.png"
+          alt="title"
+          class="title"
+        />
+        <img
+          src="./../spritesheet/text/unclickedStartBtn.png"
+          alt="play button"
+          class="playButton"
+          id="start"
+        />
+        <img
+          src="./../spritesheet/text/music666.png"
+          alt="music icon"
+          class="music"
+        />
+        <div class="characters">
+          <img
+            src="./../spritesheet/characters/FireBoy.png"
+            alt=""
+            class="character"
+          />
+          <img
+            src="./../spritesheet/characters/WaterGirl.png"
+            alt=""
+            class="character"
+          />
+        </div>
+      </div>
+    </div>
+    <canvas id="mycanvas" height="672" width="1280" class="myCanvas"></canvas>
     <!-- <img
       src="../spritesheet/characters/lever.png"
       alt=""
@@ -15,6 +52,7 @@
       id="watergirlImage"
     /> -->
     <script src="./src/js/constants.js"></script>
+    <script src="./src/js/gameDynamics.js"></script>
     <script src="./src/js/animations.js"></script>
     <script src="./src/js/utils.js"></script>
     <script src="./src/js/background.js"></script>

@@ -58,6 +58,9 @@ function animate() {
     } else {
       pushersArray[i].pusherNotPushed();
     }
+
+    if (pushersArray[i].position.y <= pushersArray[i].originalY)
+      pushersArray[i].pusherSoundDisabled = false;
   }
 
   leverArray.forEach((lever) => {

@@ -35,16 +35,25 @@ class Lever {
           character.position.x - this.handleX.width - 0.01;
     } else {
       character.isPushingBlock = false;
+      this.soundDisabled = false;
     }
 
     if (this.trigger == "rightToLeft") {
-      if (this.handleX.position.x <= this.position.x + this.width / 2)
-        this.isActive = true;
-      else this.isActive = false;
+      if (this.handleX.position.x <= this.position.x + this.width / 2) {
+        if (!this.isActive) {
+          this.isActive = true;
+          lever.play();
+        }
+      } else {
+        if (this.isActive) {
+          lever.play();
+          this.isActive = false;
+        }
+      }
     } else {
-      if (this.handleX.position.x > this.position.x + this.width / 2)
+      if (this.handleX.position.x > this.position.x + this.width / 2) {
         this.isActive = true;
-      else this.isActive = false;
+      } else this.isActive = false;
     }
   }
 

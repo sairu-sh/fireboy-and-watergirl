@@ -60,9 +60,11 @@ class Character {
     if (this.element == "fire") {
       fireboyMovement.isGrounded = false;
       this.vy = -8;
+      fbJump.play();
     } else {
       watergirlMovement.isGrounded = false;
       this.vy = -8;
+      wgJump.play();
     }
   }
 
@@ -184,6 +186,7 @@ class Character {
           this.position.y = pool.position.y - this.height - 0.01;
         } else {
           this.width = this.height = 0;
+          death.play();
         }
       } else {
         if (pool.type == "water") {
@@ -192,6 +195,7 @@ class Character {
           this.position.y = pool.position.y - this.height - 0.01;
         } else {
           this.width = this.height = 0;
+          death.play();
         }
       }
     }

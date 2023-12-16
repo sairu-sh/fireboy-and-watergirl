@@ -9,6 +9,7 @@ class Pusher {
     this.velocityY = 0;
     this.image = new Image();
     this.image.src = "../../../spritesheet/mechanisms/purplePusher.svg";
+    this.pusherSoundDisabled = false;
   }
 
   drawPusher() {
@@ -46,10 +47,16 @@ class Pusher {
     //   }
     // });
     this.isPushed = true;
+
+    if (!this.pusherSoundDisabled) {
+      pusher.play();
+      this.pusherSoundDisabled = true;
+    }
   }
 
   pusherNotPushed() {
     this.isPushed = false;
+    this.pusherSoundDisabled = true;
     if (this.position.y > this.originalY) {
       // this.velocityY -= 0.5;
       this.position.y -= 0.5;

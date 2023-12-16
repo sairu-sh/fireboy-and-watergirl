@@ -18,6 +18,7 @@ class Diamonds {
       this.type == character.element
     ) {
       this.width = this.height = 0;
+      coinCollected.play();
     }
   }
 

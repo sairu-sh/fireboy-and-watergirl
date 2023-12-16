@@ -4,10 +4,54 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  display: none;
 }
 
-.lever {
-  height: 70px;
-  width: 60px;
-  transform: rotate(15deg);
+.intro {
+  width: 100%;
+}
+
+.container {
+  max-width: 1300px;
+  max-height: 672px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.background {
+  max-height: 672px;
+}
+
+.title {
+  position: absolute;
+  top: 20%;
+  left: 20%;
+  max-width: 50%;
+}
+
+.playButton {
+  position: absolute;
+  top: 60%;
+  left: 40%;
+  width: 10%;
+}
+
+.music {
+  position: absolute;
+  top: 10%;
+  left: 80%;
+  width: 2%;
+}
+
+.characters {
+  position: absolute;
+  top: 80%;
+  left: 7%;
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.characters .character {
+  width: 100px;
 }

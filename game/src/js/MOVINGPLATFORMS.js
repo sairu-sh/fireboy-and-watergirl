@@ -38,38 +38,56 @@ class MovingPlatforms {
     switch (this.movement) {
       case "horizontalRight":
         if (isPushed) {
-          if (this.position.x < this.originalX + this.maxDisplacement)
-            this.position.x += 2;
+          if (this.position.x < this.originalX + this.maxDisplacement) {
+            platform.play();
+            this.position.x += 0.4;
+          } else platform.pause();
         } else {
-          if (this.position.x >= this.originalX) this.position.x -= 2;
+          if (this.position.x >= this.originalX) {
+            this.position.x -= 0.4;
+            platform.play();
+          } else platform.pause();
         }
         break;
       case "horizontalLeft":
         if (isPushed) {
-          if (this.position.x >= this.originalX - this.maxDisplacement)
-            this.position.x -= 2;
+          if (this.position.x >= this.originalX - this.maxDisplacement) {
+            this.position.x -= 0.4;
+            platform.play();
+          } else platform.pause();
         } else {
-          if (this.position.x + this.width < this.originalX)
-            this.position.x += 2;
+          if (this.position.x + this.width < this.originalX) {
+            this.position.x += 0.4;
+            platform.play();
+          } else platform.pause();
         }
 
         break;
       case "verticalDown":
         if (isPushed) {
-          if (this.position.y < this.originalY + this.maxDisplacement)
+          if (this.position.y < this.originalY + this.maxDisplacement) {
             this.position.y += 0.4;
+            platform.play();
+          } else platform.pause();
         } else {
-          if (this.position.y > this.originalY) this.position.y -= 0.4;
+          if (this.position.y > this.originalY) {
+            this.position.y -= 0.4;
+            platform.play();
+          } else platform.pause();
         }
 
         break;
       case "verticalUp":
         if (isPushed) {
           if (this.position.y >= this.originalY - this.maxDisplacement) {
-            this.position.y -= 2;
-          }
+            this.position.y -= 0.4;
+            platform.play();
+          } else platform.pause();
         } else {
-          if (this.position.y <= this.originalY) this.position.y += 2;
+          if (this.position.y <= this.originalY) {
+            this.position.y += 0.4;
+            platform.play();
+          } else platform.pause();
         }
         break;
     }
