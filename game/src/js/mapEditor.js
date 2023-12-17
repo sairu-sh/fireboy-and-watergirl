@@ -3,6 +3,10 @@ const selectionBar = document.getElementById("selection-bar");
 const images = document.querySelectorAll(".mapElement");
 const mapCanvas = document.getElementById("mapEditor");
 const context = mapCanvas.getContext("2d");
+
+const saveBtn = document.querySelector(".saveCanvas");
+
+let canHover = false;
 /*index
  * 1: ground/wall
  * 2: waterpool
@@ -34,20 +38,19 @@ const context = mapCanvas.getContext("2d");
 let selectedElement = 0;
 let isSelected = false;
 
-let tileSize = 32;
-
 selectionBar.addEventListener("click", handleSelection);
 
 function handleSelection(e) {
   let id = e.target.dataset.id;
   if (isSelected && id == selectedElement) {
     isSelected = false;
+    canHover = false;
     selectedElement = 0;
     e.target.classList.remove("active");
   } else {
     isSelected = true;
+    canHover = true;
     selectedElement = Number(e.target.dataset.id);
-    console.log(selectedElement);
     images.forEach((img) => {
       img.classList.remove("active");
     });
@@ -60,37 +63,67 @@ let numCols = Math.floor(mapCanvas.width / tileSize);
 
 let layer = {};
 
+let previewElementX;
+let previewElementY;
+
 function draw() {
   context.clearRect(0, 0, mapCanvas.width, mapCanvas.height);
+  context.drawImage(background, 0, 0, mapCanvas.width, mapCanvas.height);
   setImage();
-  //   console.log(layer);
+  if (canHover) {
+    updatePreviewElement();
+  }
   // Draw grid lines
-  context.strokeStyle = "#ccc"; // Set the color of the grid lines
-  context.lineWidth = 1;
+  //   context.strokeStyle = "red"; // Set the color of the grid lines
+  //   context.lineWidth = 1;
 
-  for (let i = 1; i < numRows; i++) {
-    // Draw horizontal lines
-    let y = i * tileSize;
-    context.beginPath();
-    context.moveTo(0, y);
-    context.lineTo(myCanvas.width, y);
-    context.stroke();
-  }
+  //   for (let i = 1; i < numRows; i++) {
+  //     // Draw horizontal lines
+  //     let y = i * tileSize;
+  //     context.beginPath();
+  //     context.moveTo(0, y);
+  //     context.lineTo(myCanvas.width, y);
+  //     context.stroke();
+  //   }
 
-  for (let j = 1; j < numCols; j++) {
-    // Draw vertical lines
-    let x = j * tileSize;
-    context.beginPath();
-    context.moveTo(x, 0);
-    context.lineTo(x, myCanvas.height);
-    context.stroke();
-  }
+  //   for (let j = 1; j < numCols; j++) {
+  //     // Draw vertical lines
+  //     let x = j * tileSize;
+  //     context.beginPath();
+  //     context.moveTo(x, 0);
+  //     context.lineTo(x, myCanvas.height);
+  //     context.stroke();
+  //   }
   requestAnimationFrame(draw);
 }
 
 draw();
 
+let previewElement = document.querySelector(".preview-element");
 let isMouseDown = false;
+
+function updatePreviewElement(x, y) {
+  //   let [x, y] = getCoords(e);
+  let { src, width, height } = renderImage(selectedElement);
+  context.fillStyle = "rgba(128,128,128,0.5)";
+  context.fillRect(
+    previewElementX * tileSize,
+    previewElementY * tileSize,
+    width,
+    height
+  );
+  if (selectedElement != 0) {
+    let selectedImage = new Image();
+    selectedImage.src = src;
+    context.drawImage(
+      selectedImage,
+      previewElementX * tileSize,
+      previewElementY * tileSize,
+      selectedImage.width,
+      selectedImage.height
+    );
+  }
+}
 
 function getCoords(e) {
   const { x, y } = e.target.getBoundingClientRect();
@@ -113,6 +146,8 @@ mapCanvas.addEventListener("mousedown", addTile);
 mapCanvas.addEventListener("mousemove", (e) => {
   if (isMouseDown) {
     addTile(e);
+  } else {
+    [previewElementX, previewElementY] = getCoords(e);
   }
 });
 
@@ -146,69 +181,69 @@ function renderImage(value) {
   let height = 32;
   switch (value) {
     case 1:
-      src = "../../../spritesheet/mapEditor/block1.svg";
+      src = "../../../spritesheet/mapEditor/block1 (1).png";
       break;
     case 99:
-      src = "../../../spritesheet/mapEditor/FireBoy.png";
+      src = "../../../spritesheet/mapEditor/FireBoy (1).png";
       width = 50;
       height = 50;
       break;
     case 100:
-      src = "../../../spritesheet/mapEditor/WaterGirl.png";
+      src = "../../../spritesheet/mapEditor/WaterGirl (1).png";
       width = 50;
       height = 50;
       break;
     case 60:
-      src = "../../../spritesheet/mapEditor/fire_door.png";
+      src = "../../../spritesheet/mapEditor/fire_door (1).png";
       width = 96;
       height = 96;
       break;
     case 61:
-      src = "../../../spritesheet/mapEditor/water_door.png";
+      src = "../../../spritesheet/mapEditor/water_door (1).png";
       width = 96;
       height = 96;
       break;
     case 36:
-      src = "../../../spritesheet/mapEditor/fire_gem.png";
+      src = "../../../spritesheet/mapEditor/fire_gem (1).png";
       break;
     case 35:
-      src = "../../../spritesheet/mapEditor/water_gem.png";
+      src = "../../../spritesheet/mapEditor/water_gem (1).png";
       break;
     case 3:
-      src = "../../../spritesheet/mapEditor/fire_obstacle.png";
+      src = "../../../spritesheet/mapEditor/fire_obstacle (1).png";
       width = 160;
       height = 32;
       break;
     case 2:
-      src = "../../../spritesheet/mapEditor/water_obstacle.png";
+      src = "../../../spritesheet/mapEditor/water_obstacle (1).png";
       width = 160;
       height = 32;
       break;
     case 4:
-      src = "../../../spritesheet/mapEditor/poison_obstacle.png";
+      src = "../../../spritesheet/mapEditor/poison_obstacle (1).png";
       width = 160;
       height = 32;
       break;
     case 5:
-      src = "../../../spritesheet/mapEditor/purplePusher.svg";
+      src = "../../../spritesheet/mapEditor/purplePusher.png";
       break;
     case 19:
-      src = "../../../spritesheet/mapEditor/purplePlatform.png";
+      src = "../../../spritesheet/mapEditor/purplePlatform (1).png";
       width = 128;
       height = 30;
       break;
     case 41:
-      src = "../../../spritesheet/mapEditor/lever.png";
+      src = "../../../spritesheet/mapEditor/lever (1).png";
       width = 50;
       height = 32;
       break;
     case 53:
-      src = "../../../spritesheet/mapEditor/yellowPlatform.png";
+      src = "../../../spritesheet/mapEditor/yellowPlatform (1).png";
       width = 128;
       height = 30;
       break;
     case 30:
-      src = "../../../spritesheet/mapEditor/block.svg";
+      src = "../../../spritesheet/mapEditor/block (1).png";
       width = 50;
       height = 50;
       break;
@@ -258,6 +293,22 @@ function setKeys(clicked) {
     default:
       break;
   }
-  console.log(keys);
   return keys;
 }
+
+saveBtn.addEventListener("mousedown", () => {
+  let maxRow = 21;
+  let maxCol = 40;
+
+  const map1 = Array.from({ length: maxRow }, () => Array(maxCol).fill(0));
+
+  // Assign values from the layer object to the map array
+  Object.entries(layer).forEach(([key, value]) => {
+    if (key !== undefined && key !== "undefined") {
+      const [col, row] = key.split("-").map(Number);
+      console.log(row, col);
+      map1[row][col] = value;
+    }
+  });
+  console.log(map1);
+});

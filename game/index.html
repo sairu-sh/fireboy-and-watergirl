@@ -45,6 +45,17 @@
       </div>
     </div>
 
+    <div class="level-selector">
+      <div class="container">
+        <div class="level">
+          <button data-id="1">Level 1</button>
+        </div>
+        <div class="level">
+          <button data-id="2">Level 2</button>
+        </div>
+      </div>
+    </div>
+
     <div class="mapEditor">
       <div class="elements" id="selection-bar">
         <img
@@ -138,12 +149,12 @@
           data-id="1"
         />
       </div>
-      <canvas
-        id="mapEditor"
-        height="672"
-        width="1280"
-        class="mapCanvas"
-      ></canvas>
+      <div class="editor--buttons">
+        <button class="clearCanvas btn">Clear</button>
+        <button class="saveCanvas btn">Save</button>
+      </div>
+      <canvas id="mapEditor" height="672" width="1280" class="mapCanvas">
+      </canvas>
     </div>
 
     <canvas id="mycanvas" height="672" width="1280" class="myCanvas"></canvas>
@@ -168,6 +179,8 @@
     <script src="./src/js/DOORS.js"></script>
     <script src="./src/js/CHARACTER.js"></script>
     <script src="./src/js/levels/TILEMAP.js"></script>
+    <script src="./src/js/levels/level1.js"></script>
+    <script src="./src/js/levels/level2.js"></script>
     <script src="./src/js/mapEditor.js"></script>
     <script src="./src/js/index.js"></script>
   </body>
