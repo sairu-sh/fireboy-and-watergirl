@@ -301,18 +301,26 @@ saveBtn.addEventListener("mousedown", () => {
   let maxRow = 21;
   let maxCol = 40;
 
-  const map1 = Array.from({ length: maxRow }, () => Array(maxCol).fill(0));
+  const map = Array.from({ length: maxRow }, () => Array(maxCol).fill(0));
 
   // Assign values from the layer object to the map array
   Object.entries(layer).forEach(([key, value]) => {
     if (key !== undefined && key !== "undefined") {
       const [col, row] = key.split("-").map(Number);
       console.log(row, col);
-      map1[row][col] = value;
+      map[row][col] = value;
     }
   });
+
+  const mapJSON = JSON.stringify(map);
+
+  // Store the JSON string in local storage with a specific key
+  localStorage.setItem(`map${availableLevels + 1}`, mapJSON);
+  availableLevels++;
 });
 
 clearCanvas.addEventListener("mousedown", (e) => {
   layer = {};
 });
+
+// localStorage.clear();

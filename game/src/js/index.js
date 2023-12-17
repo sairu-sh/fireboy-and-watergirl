@@ -20,6 +20,7 @@ function animate() {
 
     if (doorArray[0].open && doorArray[1].open) {
       gameWon = true;
+      clearInterval(timerInterval);
       fireBoy.position.x = 2000;
       waterGirl.position.x = 2000;
     }
