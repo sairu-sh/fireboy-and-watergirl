@@ -22,6 +22,8 @@ function animate() {
 
     if (doorArray[0].open && doorArray[1].open) {
       gameWon = true;
+      fireBoy.position.x = 2000;
+      waterGirl.position.x = 2000;
     }
     // fireBoy.collisionWithEdgeWalls();
     // waterGirl.collisionWithEdgeWalls();
@@ -120,7 +122,10 @@ function animate() {
     waterGirl.update();
   }
 
-  requestAnimationFrame(animate);
+  let animationId = requestAnimationFrame(animate);
+  if (gameOver) {
+    cancelAnimationFrame(animationId);
+  }
 }
 
 animate();
