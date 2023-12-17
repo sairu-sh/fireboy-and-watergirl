@@ -6,6 +6,7 @@ let waterGirl;
 
 function animate() {
   if (gameStart) {
+    // console.log("animation");
     characters.forEach((character) => {
       if (character.element == "fire") fireBoy = character;
       else waterGirl = character;
@@ -23,7 +24,6 @@ function animate() {
     if (doorArray.length > 0) {
       if (doorArray[0].open && doorArray[1].open) {
         gameWon = true;
-        clearInterval(timerInterval);
         fireBoy.position.x = 2000;
         waterGirl.position.x = 2000;
       }
@@ -138,12 +138,12 @@ function animate() {
   ctx.drawImage(timerImage, 520, 0, 200, 100);
   ctx.font = "30px Arial";
   ctx.fillStyle = "yellow";
-
-  // Draw the timer text at position (10, 20)
   ctx.fillText(displayTime, 585, 40);
 
+  console.log(gameOver);
   let animationId = requestAnimationFrame(animate);
   if (gameOver) {
+    clearInterval(timerInterval);
     cancelAnimationFrame(animationId);
     calculateScore();
     let matchingScoreImage;
@@ -153,6 +153,20 @@ function animate() {
     });
     matchingScoreImage?.classList.add("active");
     scoreBoard.style.display = "block";
+    scoreBoard.querySelector("#retry").classList.remove("active");
+    scoreBoard.querySelector("#continue").classList.add("active");
+  }
+
+  if (gameLost) {
+    clearInterval(timerInterval);
+    cancelAnimationFrame(animationId);
+    scoreImages.forEach((img) => {
+      img.classList.remove("active");
+      img.dataset.id == 0 ? img.classList.add("active") : "";
+    });
+    scoreBoard.style.display = "block";
+    scoreBoard.querySelector("#continue").classList.remove("active");
+    scoreBoard.querySelector("#retry").classList.add("active");
   }
 }
 
@@ -181,5 +195,49 @@ document.addEventListener("keydown", (e) => {
     if (watergirlMovement.isGrounded) {
       waterGirl.jump();
     }
+  }
+});
+
+function resetGame() {
+  // Reset all relevant game state variables to their initial values
+  gameWon = false;
+  gameOver = false;
+  gameLost = false;
+  gameStart = true;
+  scoreStatus = 1;
+  seconds = 0;
+  displayTime = "00:00";
+  clearInterval(timerInterval);
+  leverArray = [];
+  movingPlatformsArray = [];
+  doorArray = [];
+  diamondsArray = [];
+  platformArray = [];
+  blockArray = [];
+  pushersArray = [];
+  poolArray = [];
+  // Clear any existing animations or intervals
+  // cancelAnimationFrame(animationId);
+  tile.draw(maps[currentLevel - 1]);
+  startTimer();
+
+  // Call the animation function to restart the game loop
+  animate();
+}
+
+scoreBoard.addEventListener("mousedown", (e) => {
+  if (e.target.getAttribute("id") === "continue") {
+    myCanvas.style.display = "none";
+    scoreBoard.style.display = "none";
+    levelSelector.style.display = "block";
+    resetGame();
+  } else if (e.target.getAttribute("id") === "exit") {
+    myCanvas.style.display = "none";
+    scoreBoard.style.display = "none";
+    menu.style.display = "block";
+    resetGame();
+  } else if (e.target.getAttribute("id") === "retry") {
+    scoreBoard.style.display = "none";
+    resetGame();
   }
 });

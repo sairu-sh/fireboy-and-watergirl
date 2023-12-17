@@ -10,6 +10,7 @@ let availableLevels = 0;
 let currentLevel = 0;
 let gameStart = false;
 let scoreStatus = 1;
+let gameLost = false;
 
 const introSound = new Audio("../../../music/IntroMusic.wav");
 introSound.loop = true;
@@ -41,14 +42,16 @@ designerButton.addEventListener("mousedown", (e) => {
 
 levelSelector.addEventListener("mousedown", (e) => {
   currentLevel = e.target.dataset.id;
-  levelSelector.style.display = "none";
-  menu.style.display = "none";
-  mapEditor.style.display = "none";
-  myCanvas.style.display = "block";
-
-  tile.draw(maps[currentLevel - 1]);
-  startTimer();
-  gameStart = true;
+  if (currentLevel) {
+    levelSelector.style.display = "none";
+    menu.style.display = "none";
+    mapEditor.style.display = "none";
+    myCanvas.style.display = "block";
+    context.clearRect(0, 0, myCanvas.width, myCanvas.height);
+    tile.draw(maps[currentLevel - 1]);
+    startTimer();
+    gameStart = true;
+  }
 });
 
 let seconds = 0;
@@ -71,15 +74,3 @@ function incrementTimer() {
 function startTimer() {
   timerInterval = setInterval(incrementTimer, 1000);
 }
-
-scoreBoard.addEventListener("mousedown", (e) => {
-  if (e.target.getAttribute("id") === "continue") {
-    myCanvas.style.display = "none";
-    scoreBoard.style.display = "none";
-    levelSelector.style.display = "block";
-  } else if (e.target.getAttribute("id") === "continue") {
-    myCanvas.style.display = "none";
-    scoreBoard.style.display = "none";
-    menu.style.display = "block";
-  }
-});

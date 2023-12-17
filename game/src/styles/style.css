@@ -207,4 +207,9 @@ button:hover {
 .menu .options img {
   width: 100px;
   height: 50px;
+  display: none;
+}
+
+.menu .options img.active {
+  display: inline;
 }

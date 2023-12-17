@@ -190,6 +190,7 @@ class Character {
         } else {
           this.isDead = true;
           death.play();
+          gameLost = true;
         }
       } else {
         if (pool.type == "water") {
@@ -199,6 +200,7 @@ class Character {
         } else {
           this.isDead = true;
           death.play();
+          gameLost = true;
         }
       }
     }
