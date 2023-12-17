@@ -1,4 +1,6 @@
 const startButton = document.getElementById("start");
+const designerButton = document.getElementById("designer");
+const mapEditor = document.querySelector(".mapEditor");
 const menu = document.getElementById("menu");
 const levelSelector = document.querySelector(".level-selector");
 
@@ -29,9 +31,15 @@ startButton.addEventListener("click", (e) => {
   // levelSound.play();
 });
 
+designerButton.addEventListener("mousedown", (e) => {
+  menu.style.display = "none";
+  mapEditor.style.display = "flex";
+});
+
 levelSelector.addEventListener("mousedown", (e) => {
   currentLevel = e.target.dataset.id;
   levelSelector.style.display = "none";
+  mapEditor.style.display = "none";
   myCanvas.style.display = "block";
 
   tile.draw(maps[currentLevel - 1]);

@@ -5,6 +5,7 @@ const mapCanvas = document.getElementById("mapEditor");
 const context = mapCanvas.getContext("2d");
 
 const saveBtn = document.querySelector(".saveCanvas");
+const clearCanvas = document.querySelector(".clearCanvas");
 
 let canHover = false;
 /*index
@@ -310,5 +311,8 @@ saveBtn.addEventListener("mousedown", () => {
       map1[row][col] = value;
     }
   });
-  console.log(map1);
+});
+
+clearCanvas.addEventListener("mousedown", (e) => {
+  layer = {};
 });
