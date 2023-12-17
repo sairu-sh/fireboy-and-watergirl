@@ -120,6 +120,13 @@ function animate() {
     waterGirl.update();
   }
 
+  ctx.drawImage(timerImage, 520, 0, 200, 100);
+  ctx.font = "30px Arial";
+  ctx.fillStyle = "yellow";
+
+  // Draw the timer text at position (10, 20)
+  ctx.fillText(displayTime, 585, 40);
+
   let animationId = requestAnimationFrame(animate);
   if (gameOver) {
     cancelAnimationFrame(animationId);
@@ -138,11 +145,11 @@ function animate() {
 animate();
 
 function calculateScore() {
-  if (diamondsArray.length == 0 && seconds <= 120) {
+  if (diamondsArray.length == 0 && seconds <= 90) {
     scoreStatus = 1;
-  } else if (diamondsArray.length !== 0 && seconds <= 120) {
+  } else if (diamondsArray.length !== 0 && seconds <= 90) {
     scoreStatus = 2;
-  } else if (diamondsArray.length !== 0 && seconds > 120) {
+  } else if (diamondsArray.length !== 0 && seconds > 90) {
     scoreStatus = 3;
   } else {
     scoreStatus = 4;

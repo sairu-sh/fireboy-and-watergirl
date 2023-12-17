@@ -47,17 +47,18 @@ levelSelector.addEventListener("mousedown", (e) => {
   myCanvas.style.display = "block";
 
   tile.draw(maps[currentLevel - 1]);
-  gameStart = true;
   startTimer();
+  gameStart = true;
 });
 
 let seconds = 0;
 let timerInterval;
+let displayTime = "00:00";
 
 function updateTimer() {
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = seconds % 60;
-  const displayTime = `${String(minutes).padStart(2, "0")}:${String(
+  displayTime = `${String(minutes).padStart(2, "0")}:${String(
     remainingSeconds
   ).padStart(2, "0")}`;
 }
