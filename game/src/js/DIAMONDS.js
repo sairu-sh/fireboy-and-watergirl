@@ -10,7 +10,7 @@ class Diamonds {
     this.height = 32;
   }
 
-  collisionWithCharacter(character) {
+  collisionWithCharacter(character, i) {
     // console.log(this);
     // console.log(character);
     if (
@@ -19,6 +19,10 @@ class Diamonds {
     ) {
       this.width = this.height = 0;
       coinCollected.play();
+      const diamondIndex = diamondsArray.indexOf(this);
+      if (diamondIndex !== -1) {
+        diamondsArray.splice(diamondIndex, 1);
+      }
     }
   }
 
@@ -65,3 +69,4 @@ class Diamonds {
 }
 
 let diamondsArray = [];
+let diasNumber = diamondsArray.length;

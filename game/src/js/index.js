@@ -12,8 +12,6 @@ function animate() {
     });
     ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
     ctx.drawImage(background, 0, 0, myCanvas.width, myCanvas.height);
-
-    console.log(fireBoy);
     doorArray.forEach((door) => {
       door.drawDoors();
       door.isOpen(fireBoy);
@@ -112,10 +110,10 @@ function animate() {
     //   });
     // });
 
-    diamondsArray.forEach((dia) => {
+    diamondsArray.forEach((dia, i) => {
       dia.update();
-      dia.collisionWithCharacter(fireBoy);
-      dia.collisionWithCharacter(waterGirl);
+      dia.collisionWithCharacter(fireBoy, i);
+      dia.collisionWithCharacter(waterGirl, i);
     });
 
     fireBoy.update();
@@ -125,10 +123,31 @@ function animate() {
   let animationId = requestAnimationFrame(animate);
   if (gameOver) {
     cancelAnimationFrame(animationId);
+    calculateScore();
+    console.log(menu);
+    let matchingScoreImage;
+    scoreImages.forEach((img) => {
+      img.classList.remove("active");
+      if (img.dataset.id == scoreStatus) matchingScoreImage = img;
+    });
+    matchingScoreImage?.classList.add("active");
+    scoreBoard.style.display = "block";
   }
 }
 
 animate();
+
+function calculateScore() {
+  if (diamondsArray.length == 0 && seconds <= 120) {
+    scoreStatus = 1;
+  } else if (diamondsArray.length !== 0 && seconds <= 120) {
+    scoreStatus = 2;
+  } else if (diamondsArray.length !== 0 && seconds > 120) {
+    scoreStatus = 3;
+  } else {
+    scoreStatus = 4;
+  }
+}
 
 //listen for the jumping event triggered by the player
 document.addEventListener("keydown", (e) => {

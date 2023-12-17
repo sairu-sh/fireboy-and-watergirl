@@ -2,11 +2,14 @@ const startButton = document.getElementById("start");
 const designerButton = document.getElementById("designer");
 const mapEditor = document.querySelector(".mapEditor");
 const menu = document.getElementById("menu");
+const scoreBoard = document.getElementById("scoreboard");
+const scoreImages = document.querySelectorAll(".score");
 const levelSelector = document.querySelector(".level-selector");
 
 let availableLevels = 3;
 let currentLevel = 1;
 let gameStart = false;
+let scoreStatus = 1;
 
 const introSound = new Audio("../../../music/IntroMusic.wav");
 introSound.loop = true;
@@ -39,9 +42,31 @@ designerButton.addEventListener("mousedown", (e) => {
 levelSelector.addEventListener("mousedown", (e) => {
   currentLevel = e.target.dataset.id;
   levelSelector.style.display = "none";
+  menu.style.display = "none";
   mapEditor.style.display = "none";
   myCanvas.style.display = "block";
 
   tile.draw(maps[currentLevel - 1]);
   gameStart = true;
+  startTimer();
 });
+
+let seconds = 0;
+let timerInterval;
+
+function updateTimer() {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  const displayTime = `${String(minutes).padStart(2, "0")}:${String(
+    remainingSeconds
+  ).padStart(2, "0")}`;
+}
+
+function incrementTimer() {
+  seconds++;
+  updateTimer();
+}
+
+function startTimer() {
+  timerInterval = setInterval(incrementTimer, 1000);
+}
