@@ -70,3 +70,15 @@ function incrementTimer() {
 function startTimer() {
   timerInterval = setInterval(incrementTimer, 1000);
 }
+
+scoreBoard.addEventListener("mousedown", (e) => {
+  if (e.target.getAttribute("id") === "continue") {
+    myCanvas.style.display = "none";
+    scoreBoard.style.display = "none";
+    levelSelector.style.display = "block";
+  } else if (e.target.getAttribute("id") === "continue") {
+    myCanvas.style.display = "none";
+    scoreBoard.style.display = "none";
+    menu.style.display = "block";
+  }
+});

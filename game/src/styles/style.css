@@ -200,8 +200,8 @@ button:hover {
   display: flex;
   position: absolute;
   top: 70%;
-  left: 15%;
-  gap: 50px;
+  left: 20%;
+  gap: 150px;
 }
 
 .menu .options img {
