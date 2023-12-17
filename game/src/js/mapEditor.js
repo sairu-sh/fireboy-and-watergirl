@@ -103,8 +103,7 @@ draw();
 let previewElement = document.querySelector(".preview-element");
 let isMouseDown = false;
 
-function updatePreviewElement(x, y) {
-  //   let [x, y] = getCoords(e);
+function updatePreviewElement() {
   let { src, width, height } = renderImage(selectedElement);
   context.fillStyle = "rgba(128,128,128,0.5)";
   context.fillRect(
@@ -307,7 +306,6 @@ saveBtn.addEventListener("mousedown", () => {
   Object.entries(layer).forEach(([key, value]) => {
     if (key !== undefined && key !== "undefined") {
       const [col, row] = key.split("-").map(Number);
-      console.log(row, col);
       map[row][col] = value;
     }
   });

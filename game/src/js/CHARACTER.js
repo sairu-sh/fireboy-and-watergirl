@@ -152,7 +152,6 @@ class Character {
       let platform = movingPlatformsArray[i];
       if (detectCollision({ object1: this, object2: platform })) {
         if (this.vy < 0) {
-          console.log("hi");
           this.vy = 0;
           this.position.y = platform.position.y + platform.height + 0.01;
         }
@@ -264,7 +263,6 @@ class Character {
    * @param {context} ctx
    */
   draw() {
-    // console.log(this.vx);
     if (this.element == "fire") this.setFireboyCropbox();
     else this.setWatergirlCropbox();
     ctx.drawImage(

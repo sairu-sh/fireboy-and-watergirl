@@ -14,46 +14,55 @@ function animate() {
     ctx.drawImage(background, 0, 0, myCanvas.width, myCanvas.height);
     doorArray.forEach((door) => {
       door.drawDoors();
-      door.isOpen(fireBoy);
-      door.isOpen(waterGirl);
+      if (fireBoy && waterGirl) {
+        door.isOpen(fireBoy);
+        door.isOpen(waterGirl);
+      }
     });
 
-    if (doorArray[0].open && doorArray[1].open) {
-      gameWon = true;
-      clearInterval(timerInterval);
-      fireBoy.position.x = 2000;
-      waterGirl.position.x = 2000;
+    if (doorArray.length > 0) {
+      if (doorArray[0].open && doorArray[1].open) {
+        gameWon = true;
+        clearInterval(timerInterval);
+        fireBoy.position.x = 2000;
+        waterGirl.position.x = 2000;
+      }
     }
-    // fireBoy.collisionWithEdgeWalls();
-    // waterGirl.collisionWithEdgeWalls();
-    fireBoy.draw();
-    waterGirl.draw();
+
+    if (fireBoy && waterGirl) {
+      fireBoy.draw();
+      waterGirl.draw();
+    }
 
     for (let i = 0; i < poolArray.length; i++) {
       poolArray[i].drawPool();
-      fireBoy.collisionWithPools(poolArray[i]);
-      waterGirl.collisionWithPools(poolArray[i]);
+      if (fireBoy && waterGirl) {
+        fireBoy.collisionWithPools(poolArray[i]);
+        waterGirl.collisionWithPools(poolArray[i]);
+      }
     }
 
     for (let i = 0; i < pushersArray.length; i++) {
       pushersArray[i].drawPusher();
 
-      const isFireBoyColliding = detectCollision({
-        object1: fireBoy,
-        object2: pushersArray[i],
-      });
-      const isWaterGirlColliding = detectCollision({
-        object1: waterGirl,
-        object2: pushersArray[i],
-      });
-      const isBlockColliding = blockArray.some((block) =>
-        detectCollision({ object1: block, object2: pushersArray[i] })
-      );
+      if (fireBoy && waterGirl) {
+        const isFireBoyColliding = detectCollision({
+          object1: fireBoy,
+          object2: pushersArray[i],
+        });
+        const isWaterGirlColliding = detectCollision({
+          object1: waterGirl,
+          object2: pushersArray[i],
+        });
+        const isBlockColliding = blockArray.some((block) =>
+          detectCollision({ object1: block, object2: pushersArray[i] })
+        );
 
-      if (isFireBoyColliding || isWaterGirlColliding || isBlockColliding) {
-        pushersArray[i].pusherPushed();
-      } else {
-        pushersArray[i].pusherNotPushed();
+        if (isFireBoyColliding || isWaterGirlColliding || isBlockColliding) {
+          pushersArray[i].pusherPushed();
+        } else {
+          pushersArray[i].pusherNotPushed();
+        }
       }
 
       if (pushersArray[i].position.y <= pushersArray[i].originalY)
@@ -111,14 +120,19 @@ function animate() {
     //   });
     // });
 
-    diamondsArray.forEach((dia, i) => {
-      dia.update();
-      dia.collisionWithCharacter(fireBoy, i);
-      dia.collisionWithCharacter(waterGirl, i);
-    });
-
-    fireBoy.update();
-    waterGirl.update();
+    if (diamondsArray.length > 0) {
+      diamondsArray.forEach((dia, i) => {
+        dia.update();
+        if (fireBoy && waterGirl) {
+          dia.collisionWithCharacter(fireBoy, i);
+          dia.collisionWithCharacter(waterGirl, i);
+        }
+      });
+    }
+    if (fireBoy && waterGirl) {
+      fireBoy.update();
+      waterGirl.update();
+    }
   }
 
   ctx.drawImage(timerImage, 520, 0, 200, 100);
@@ -132,7 +146,6 @@ function animate() {
   if (gameOver) {
     cancelAnimationFrame(animationId);
     calculateScore();
-    console.log(menu);
     let matchingScoreImage;
     scoreImages.forEach((img) => {
       img.classList.remove("active");

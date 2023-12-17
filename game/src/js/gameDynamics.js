@@ -6,8 +6,8 @@ const scoreBoard = document.getElementById("scoreboard");
 const scoreImages = document.querySelectorAll(".score");
 const levelSelector = document.querySelector(".level-selector");
 
-let availableLevels = 1;
-let currentLevel = 1;
+let availableLevels = 0;
+let currentLevel = 0;
 let gameStart = false;
 let scoreStatus = 1;
 
