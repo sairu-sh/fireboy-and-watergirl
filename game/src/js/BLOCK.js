@@ -1,8 +1,8 @@
 class Block {
   constructor({ position }) {
     this.position = position;
-    this.width = 40;
-    this.height = 40;
+    this.width = 50;
+    this.height = 50;
     this.vx = 3;
     this.vy = 0;
     this.image = new Image();

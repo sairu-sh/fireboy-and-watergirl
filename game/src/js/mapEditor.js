@@ -121,21 +121,99 @@ function addTile(e) {
   let clicked = getCoords(e);
   let key = clicked[0] + "-" + clicked[1];
   if (!(key in layer)) keys = setKeys(clicked);
-
-  //   console.log(keys);
-  layer[keys[0]] = selectedElement;
   for (let i = 1; i < keys.length; i++) {
     layer[keys[i]] = -1;
   }
+  layer[keys[0]] = selectedElement;
 }
 
 function setImage() {
-  Object.keys(layer).forEach((key) => {
-    let positionX = Number(key.split("-")[0]);
-    let positionY = Number(key.split("-")[1]);
-    context.fillStyle = "red";
-    context.fillRect(positionX * 32, positionY * 32, 32, 32);
+  Object.entries(layer).forEach(([key, value]) => {
+    if (value != -1) {
+      let positionX = Number(key.split("-")[0]);
+      let positionY = Number(key.split("-")[1]);
+      let { src, width, height } = renderImage(Number(value));
+      let image = new Image();
+      image.src = src;
+      context.drawImage(image, positionX * 32, positionY * 32, width, height);
+    }
   });
+}
+
+function renderImage(value) {
+  let src;
+  let width = 32;
+  let height = 32;
+  switch (value) {
+    case 1:
+      src = "../../../spritesheet/mapEditor/block1.svg";
+      break;
+    case 99:
+      src = "../../../spritesheet/mapEditor/FireBoy.png";
+      width = 50;
+      height = 50;
+      break;
+    case 100:
+      src = "../../../spritesheet/mapEditor/WaterGirl.png";
+      width = 50;
+      height = 50;
+      break;
+    case 60:
+      src = "../../../spritesheet/mapEditor/fire_door.png";
+      width = 96;
+      height = 96;
+      break;
+    case 61:
+      src = "../../../spritesheet/mapEditor/water_door.png";
+      width = 96;
+      height = 96;
+      break;
+    case 36:
+      src = "../../../spritesheet/mapEditor/fire_gem.png";
+      break;
+    case 35:
+      src = "../../../spritesheet/mapEditor/water_gem.png";
+      break;
+    case 3:
+      src = "../../../spritesheet/mapEditor/fire_obstacle.png";
+      width = 160;
+      height = 32;
+      break;
+    case 2:
+      src = "../../../spritesheet/mapEditor/water_obstacle.png";
+      width = 160;
+      height = 32;
+      break;
+    case 4:
+      src = "../../../spritesheet/mapEditor/poison_obstacle.png";
+      width = 160;
+      height = 32;
+      break;
+    case 5:
+      src = "../../../spritesheet/mapEditor/purplePusher.svg";
+      break;
+    case 19:
+      src = "../../../spritesheet/mapEditor/purplePlatform.png";
+      width = 128;
+      height = 30;
+      break;
+    case 41:
+      src = "../../../spritesheet/mapEditor/lever.png";
+      width = 50;
+      height = 32;
+      break;
+    case 53:
+      src = "../../../spritesheet/mapEditor/yellowPlatform.png";
+      width = 128;
+      height = 30;
+      break;
+    case 30:
+      src = "../../../spritesheet/mapEditor/block.svg";
+      width = 50;
+      height = 50;
+      break;
+  }
+  return { src, width, height };
 }
 
 function setKeys(clicked) {
