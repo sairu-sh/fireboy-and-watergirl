@@ -119,10 +119,10 @@ class TileMap {
     ],
   ];
 
-  draw() {
-    for (let row = 0; row < this.map.length; row++) {
-      for (let column = 0; column < this.map[row].length; column++) {
-        let tile = this.map[row][column];
+  draw(map) {
+    for (let row = 0; row < map.length; row++) {
+      for (let column = 0; column < map[row].length; column++) {
+        let tile = map[row][column];
         switch (tile) {
           case 1:
             platformArray.push(
@@ -401,3 +401,6 @@ class TileMap {
     }
   }
 }
+let tileSize = 32;
+let tile = new TileMap(tileSize);
+let maps = [];
