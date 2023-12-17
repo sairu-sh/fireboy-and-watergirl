@@ -6,8 +6,8 @@ class Diamonds {
     this.vy = 0.5;
     this.image = new Image();
     this.image.src = "../../../spritesheet/diamonds.svg";
-    this.width = 40;
-    this.height = 40;
+    this.width = 32;
+    this.height = 32;
   }
 
   collisionWithCharacter(character) {

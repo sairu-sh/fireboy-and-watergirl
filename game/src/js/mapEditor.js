@@ -46,13 +46,13 @@ function handleSelection(e) {
     e.target.classList.remove("active");
   } else {
     isSelected = true;
-    selectedElement = e.target.dataset.id;
+    selectedElement = Number(e.target.dataset.id);
+    console.log(selectedElement);
     images.forEach((img) => {
       img.classList.remove("active");
     });
     e.target.classList.add("active");
   }
-  console.log(selectedElement);
 }
 
 let numRows = Math.floor(mapCanvas.height / tileSize);
@@ -117,9 +117,16 @@ mapCanvas.addEventListener("mousemove", (e) => {
 });
 
 function addTile(e) {
+  let keys = [];
   let clicked = getCoords(e);
-  key = clicked[0] + "-" + clicked[1];
-  layer[key] = selectedElement;
+  let key = clicked[0] + "-" + clicked[1];
+  if (!(key in layer)) keys = setKeys(clicked);
+
+  //   console.log(keys);
+  layer[keys[0]] = selectedElement;
+  for (let i = 1; i < keys.length; i++) {
+    layer[keys[i]] = -1;
+  }
 }
 
 function setImage() {
@@ -128,7 +135,51 @@ function setImage() {
     let positionY = Number(key.split("-")[1]);
     context.fillStyle = "red";
     context.fillRect(positionX * 32, positionY * 32, 32, 32);
-    //   let [tilesheetX, tilesheetY] = layer[key];
-    //   console.log(positionX, positionY, tilesheetX, tilesheetY);
   });
+}
+
+function setKeys(clicked) {
+  let keys = [];
+  let positionX = clicked[0];
+  let positionY = clicked[1];
+  keys.push(positionX + "-" + positionY);
+  switch (selectedElement) {
+    case 1:
+    case 35:
+    case 36:
+    case 5:
+      break;
+    case 2:
+    case 3:
+    case 4:
+      for (let i = 1; i < 5; i++) keys.push(positionX + i + "-" + positionY);
+      break;
+    case 19:
+    case 53:
+      for (let i = 1; i < 4; i++) keys.push(positionX + i + "-" + positionY);
+      break;
+    case 41:
+      for (let i = 1; i < 2; i++) keys.push(positionX + i + "-" + positionY);
+      break;
+    case 99:
+    case 100:
+    case 30:
+      for (let i = 0; i < 2; i++) {
+        for (let j = 0; j < 2; j++) {
+          keys.push(positionX + i + "-" + (positionY + j));
+        }
+      }
+      break;
+    case 60:
+    case 61:
+      for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+          keys.push(positionX + i + "-" + (positionY + j));
+        }
+      }
+    default:
+      break;
+  }
+  console.log(keys);
+  return keys;
 }
