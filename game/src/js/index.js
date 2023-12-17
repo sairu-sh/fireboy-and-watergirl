@@ -1,4 +1,4 @@
-let tileSize = 32;
+// let tileSize = 32;
 let tile = new TileMap(tileSize);
 tile.draw();
 

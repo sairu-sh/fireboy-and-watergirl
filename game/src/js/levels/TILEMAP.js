@@ -9,7 +9,7 @@ class TileMap {
    * 2: waterpool
    * 3: lava pool
    * 4: goo pool
-   * 5: yellow pusher
+   * 5: purple pusher
    * 6: white pusher
    * 7: green pusher
    * 8: pink pusher
