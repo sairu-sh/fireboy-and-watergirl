@@ -36,11 +36,19 @@
   width: 10%;
 }
 
+.playButton:hover {
+  cursor: pointer;
+}
+
 .music {
   position: absolute;
   top: 10%;
   left: 80%;
   width: 2%;
+}
+
+.music:hover {
+  cursor: pointer;
 }
 
 .characters {

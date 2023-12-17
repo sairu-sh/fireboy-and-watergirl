@@ -17,6 +17,7 @@ class Character {
     fireboyMovement.isGrounded = watergirlMovement.isGrounded = false;
     this.frame = 0;
     this.totalFrames = 7;
+    this.isDead = false;
   }
 
   update() {
@@ -183,9 +184,12 @@ class Character {
     if (detectCollision({ object1: this, object2: pool })) {
       if (this.element == "fire") {
         if (pool.type == "fire") {
-          this.position.y = pool.position.y - this.height - 0.01;
+          if (this.vy > 0) {
+            this.vy = 0;
+            this.position.y = pool.position.y - this.height - 0.01;
+          }
         } else {
-          this.width = this.height = 0;
+          this.isDead = true;
           death.play();
         }
       } else {
@@ -194,7 +198,7 @@ class Character {
           watergirlMovement.isGrounded = true;
           this.position.y = pool.position.y - this.height - 0.01;
         } else {
-          this.width = this.height = 0;
+          this.isDead = true;
           death.play();
         }
       }
@@ -281,7 +285,17 @@ class Character {
   }
 
   setFireboyCropbox() {
-    if (this.vx == 0 && fireboyMovement.isGrounded) {
+    if (this.isDead) {
+      this.image.src = "../../../spritesheet/characters/die.png";
+      setCropboxAttributes({
+        position: {
+          x: 0,
+          y: 0,
+        },
+        width: 493,
+        height: 484,
+      });
+    } else if (this.vx == 0 && fireboyMovement.isGrounded) {
       setCropboxAttributes({
         position: {
           x: 0,
@@ -368,7 +382,17 @@ class Character {
   }
 
   setWatergirlCropbox() {
-    if (this.vx == 0 && watergirlMovement.isGrounded) {
+    if (this.isDead) {
+      this.image.src = "../../../spritesheet/characters/die.png";
+      setCropboxAttributes({
+        position: {
+          x: 0,
+          y: 0,
+        },
+        width: 493,
+        height: 484,
+      });
+    } else if (this.vx == 0 && watergirlMovement.isGrounded) {
       setCropboxAttributes({
         position: {
           x: 0,
