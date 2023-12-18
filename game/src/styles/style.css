@@ -147,7 +147,7 @@
   justify-content: flex-start;
   gap: 50px;
   flex-wrap: wrap;
-  background-image: url("/spritesheet/background.svg");
+  background-image: url("fireboy-and-watergirl/spritesheet/intro/TempleHallForest.jpg");
   /* justify-content: space-between; */
 }
 
