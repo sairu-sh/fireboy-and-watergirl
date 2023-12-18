@@ -71,8 +71,8 @@ class Block {
       cropbox.height,
       this.position.x,
       this.position.y,
-      40,
-      40
+      this.width,
+      this.height
     );
     // ctx.fillStyle = "gray";
     // ctx.fillRect(this.position.x, this.position.y, this.width, this.height);

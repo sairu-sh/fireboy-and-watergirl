@@ -75,26 +75,26 @@ function draw() {
     updatePreviewElement();
   }
   // Draw grid lines
-  //   context.strokeStyle = "red"; // Set the color of the grid lines
-  //   context.lineWidth = 1;
+  context.strokeStyle = "#ccc"; // Set the color of the grid lines
+  context.lineWidth = 1;
 
-  //   for (let i = 1; i < numRows; i++) {
-  //     // Draw horizontal lines
-  //     let y = i * tileSize;
-  //     context.beginPath();
-  //     context.moveTo(0, y);
-  //     context.lineTo(myCanvas.width, y);
-  //     context.stroke();
-  //   }
+  for (let i = 1; i < numRows; i++) {
+    // Draw horizontal lines
+    let y = i * tileSize;
+    context.beginPath();
+    context.moveTo(0, y);
+    context.lineTo(myCanvas.width, y);
+    context.stroke();
+  }
 
-  //   for (let j = 1; j < numCols; j++) {
-  //     // Draw vertical lines
-  //     let x = j * tileSize;
-  //     context.beginPath();
-  //     context.moveTo(x, 0);
-  //     context.lineTo(x, myCanvas.height);
-  //     context.stroke();
-  //   }
+  for (let j = 1; j < numCols; j++) {
+    // Draw vertical lines
+    let x = j * tileSize;
+    context.beginPath();
+    context.moveTo(x, 0);
+    context.lineTo(x, myCanvas.height);
+    context.stroke();
+  }
   requestAnimationFrame(draw);
 }
 
@@ -315,6 +315,9 @@ saveBtn.addEventListener("mousedown", () => {
   // Store the JSON string in local storage with a specific key
   localStorage.setItem(`map${availableLevels + 1}`, mapJSON);
   availableLevels++;
+
+  mapEditor.style.display = "none";
+  levelSelector.style.display = "block";
 });
 
 clearCanvas.addEventListener("mousedown", (e) => {

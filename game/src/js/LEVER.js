@@ -51,22 +51,76 @@ class Lever {
         }
       }
     } else {
-      if (this.handleX.position.x > this.position.x + this.width / 2) {
-        this.isActive = true;
-      } else this.isActive = false;
+      if (this.handleX.position.x >= this.position.x + this.width / 2) {
+        if (!this.isActive) {
+          this.isActive = true;
+          lever.play();
+        }
+      } else {
+        if (this.isActive) {
+          lever.play();
+          this.isActive = false;
+        }
+      }
     }
   }
 
   update() {
     if (this.trigger == "leftToRight") {
-      if (this.handleX.position.x <= this.position.x + this.width / 4) {
+      if (this.handleX.position.x <= this.position.x + this.width * 0.2) {
         setCropboxAttributes({
           position: {
-            x: 0,
+            x: 775,
             y: 0,
           },
-          width: 40,
-          height: 55,
+          width: 70,
+          height: 140,
+        });
+      } else if (
+        this.handleX.position.x <=
+        this.position.x + this.width * 0.4
+      ) {
+        setCropboxAttributes({
+          position: {
+            x: 690,
+            y: 0,
+          },
+          width: 70,
+          height: 140,
+        });
+      } else if (
+        this.handleX.position.x <=
+        this.position.x + this.width * 0.6
+      ) {
+        setCropboxAttributes({
+          position: {
+            x: 600,
+            y: 0,
+          },
+          width: 70,
+          height: 140,
+        });
+      } else if (
+        this.handleX.position.x <=
+        this.position.x + this.width * 0.8
+      ) {
+        console.log("hi");
+        setCropboxAttributes({
+          position: {
+            x: 510,
+            y: 0,
+          },
+          width: 70,
+          height: 140,
+        });
+      } else {
+        setCropboxAttributes({
+          position: {
+            x: 425,
+            y: 0,
+          },
+          width: 70,
+          height: 140,
         });
       }
     } else {

@@ -140,7 +140,6 @@ function animate() {
   ctx.fillStyle = "yellow";
   ctx.fillText(displayTime, 585, 40);
 
-  console.log(gameOver);
   let animationId = requestAnimationFrame(animate);
   if (gameOver) {
     clearInterval(timerInterval);
@@ -230,11 +229,15 @@ scoreBoard.addEventListener("mousedown", (e) => {
     myCanvas.style.display = "none";
     scoreBoard.style.display = "none";
     levelSelector.style.display = "block";
+    levelSound.pause();
+    introSound.play();
     resetGame();
   } else if (e.target.getAttribute("id") === "exit") {
     myCanvas.style.display = "none";
     scoreBoard.style.display = "none";
     menu.style.display = "block";
+    levelSound.pause();
+    introSound.play();
     resetGame();
   } else if (e.target.getAttribute("id") === "retry") {
     scoreBoard.style.display = "none";

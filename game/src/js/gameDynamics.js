@@ -12,27 +12,66 @@ let gameStart = false;
 let scoreStatus = 1;
 let gameLost = false;
 
-const introSound = new Audio("../../../music/IntroMusic.wav");
-introSound.loop = true;
-// introSound.play();
+let musicEnabled = true;
+let introSound;
+let levelSound;
+let coinCollected;
+let death;
+let fbJump;
+let wgJump;
+let door;
+let lever;
+let pusher;
+let platform;
 
-const levelSound = new Audio("../../../music/LevelMusic.wav");
-levelSound.loop = true;
+function createAudio(path, loop = false) {
+  const audio = new Audio(path);
+  audio.loop = loop;
+  return audio;
+}
 
-const coinCollected = new Audio("../../../music/coinCollect.ogg");
-const death = new Audio("../../../music/death.ogg");
-const fbJump = new Audio("../../../music/fireboyJump.ogg");
-const wgJump = new Audio("../../../music/watergirlJump.ogg");
-const door = new Audio("../../../music/Door.mp3");
-const lever = new Audio("../../../music/Lever.mp3");
-const pusher = new Audio("../../../music/Pusher.mp3");
-const platform = new Audio("../../../music/Platform.mp3");
+function setMusic() {
+  const defaultPath = "../../../music/HD - Absolute Silence Sound Effect.mp3";
+
+  if (musicEnabled) {
+    introSound = createAudio("../../../music/IntroMusic.wav", true);
+    levelSound = createAudio("../../../music/LevelMusic.wav", true);
+    coinCollected = createAudio("../../../music/coinCollect.ogg");
+    death = createAudio("../../../music/death.ogg");
+    fbJump = createAudio("../../../music/fireboyJump.ogg");
+    wgJump = createAudio("../../../music/watergirlJump.ogg");
+    door = createAudio("../../../music/Door.mp3");
+    lever = createAudio("../../../music/Lever.mp3");
+    pusher = createAudio("../../../music/Pusher.mp3");
+    platform = createAudio("../../../music/Platform.mp3");
+  } else {
+    introSound = createAudio(defaultPath);
+    levelSound = createAudio(defaultPath);
+    coinCollected = createAudio(defaultPath);
+    death = createAudio(defaultPath);
+    fbJump = createAudio(defaultPath);
+    wgJump = createAudio(defaultPath);
+    door = createAudio(defaultPath);
+    lever = createAudio(defaultPath);
+    pusher = createAudio(defaultPath);
+    platform = createAudio(defaultPath);
+  }
+}
+setMusic();
+
+document.addEventListener("mousedown", () => {
+  introSound.play();
+});
+
+const musicBtn = document.querySelector(".music");
+musicBtn.addEventListener("mousedown", (e) => {
+  setMusic();
+  musicEnabled = !musicEnabled;
+});
 
 startButton.addEventListener("click", (e) => {
   menu.style.display = "none";
   levelSelector.style.display = "block";
-  introSound.pause();
-  // levelSound.play();
 });
 
 designerButton.addEventListener("mousedown", (e) => {
@@ -51,6 +90,8 @@ levelSelector.addEventListener("mousedown", (e) => {
     tile.draw(maps[currentLevel - 1]);
     startTimer();
     gameStart = true;
+    introSound.pause();
+    levelSound.play();
   }
 });
 

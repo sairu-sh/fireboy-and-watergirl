@@ -162,6 +162,10 @@ class Character {
             ? (fireboyMovement.isGrounded = true)
             : (watergirlMovement.isGrounded = true);
         }
+        // if (platform.vy > 0) {
+        //   platform.vy = 0;
+        //   platform.position.y = this.position.y - platform.height - 0.01;
+        // }
       }
     }
   }

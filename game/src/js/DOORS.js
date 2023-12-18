@@ -21,7 +21,7 @@ class Doors {
   isOpen(character) {
     if (detectCollision({ object1: character, object2: this.boundingBox })) {
       if (this.element == character.element) this.open = true;
-    } else this.open = false;
+    } else if (this.element == character.element) this.open = false;
   }
 
   drawDoors() {

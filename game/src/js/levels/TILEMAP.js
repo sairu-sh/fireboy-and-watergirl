@@ -405,6 +405,7 @@ let tileSize = 32;
 let tile = new TileMap(tileSize);
 let maps = [];
 maps.push(map1);
+maps.push(map2);
 for (let i = 0; i < localStorage.length; i++) {
   const key = localStorage.key(i);
   const value = JSON.parse(localStorage.getItem(key));
