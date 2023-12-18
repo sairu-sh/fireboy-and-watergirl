@@ -37,8 +37,8 @@ function animate() {
     for (let i = 0; i < poolArray.length; i++) {
       poolArray[i].drawPool();
       if (fireBoy && waterGirl) {
-        fireBoy.collisionWithPools(poolArray[i]);
-        waterGirl.collisionWithPools(poolArray[i]);
+        // fireBoy.collisionWithPools(poolArray[i]);
+        // waterGirl.collisionWithPools(poolArray[i]);
       }
     }
 
@@ -143,29 +143,33 @@ function animate() {
   let animationId = requestAnimationFrame(animate);
   if (gameOver) {
     clearInterval(timerInterval);
-    cancelAnimationFrame(animationId);
-    calculateScore();
-    let matchingScoreImage;
-    scoreImages.forEach((img) => {
-      img.classList.remove("active");
-      if (img.dataset.id == scoreStatus) matchingScoreImage = img;
-    });
-    matchingScoreImage?.classList.add("active");
-    scoreBoard.style.display = "block";
-    scoreBoard.querySelector("#retry").classList.remove("active");
-    scoreBoard.querySelector("#continue").classList.add("active");
+    setTimeout(() => {
+      cancelAnimationFrame(animationId);
+      calculateScore();
+      let matchingScoreImage;
+      scoreImages.forEach((img) => {
+        img.classList.remove("active");
+        if (img.dataset.id == scoreStatus) matchingScoreImage = img;
+      });
+      matchingScoreImage?.classList.add("active");
+      scoreBoard.style.display = "block";
+      scoreBoard.querySelector("#retry").classList.remove("active");
+      scoreBoard.querySelector("#continue").classList.add("active");
+    }, 1000);
   }
 
   if (gameLost) {
     clearInterval(timerInterval);
-    cancelAnimationFrame(animationId);
-    scoreImages.forEach((img) => {
-      img.classList.remove("active");
-      img.dataset.id == 0 ? img.classList.add("active") : "";
-    });
-    scoreBoard.style.display = "block";
-    scoreBoard.querySelector("#continue").classList.remove("active");
-    scoreBoard.querySelector("#retry").classList.add("active");
+    setTimeout(() => {
+      cancelAnimationFrame(animationId);
+      scoreImages.forEach((img) => {
+        img.classList.remove("active");
+        img.dataset.id == 0 ? img.classList.add("active") : "";
+      });
+      scoreBoard.style.display = "block";
+      scoreBoard.querySelector("#continue").classList.remove("active");
+      scoreBoard.querySelector("#retry").classList.add("active");
+    }, 1000);
   }
 }
 
