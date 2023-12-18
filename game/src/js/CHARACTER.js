@@ -34,10 +34,12 @@ class Character {
       this.horizontalCollisionWithPlatforms();
       this.horizontalCollisionWithMovingPlatforms();
       this.horizontalCollisionWithBlock();
+      this.horizontalCollisionWithPool();
       this.applyGravity();
       this.verticalCollisionWithPlatforms();
       this.verticalCollisionWithMovingPlatforms();
       this.verticalCollisionWithBlock();
+      this.verticalCollisionWithPool();
     } else {
       if (!watergirlMovement.right && !watergirlMovement.left) waterGirl.vx = 0;
       if (watergirlMovement.right)
@@ -48,23 +50,26 @@ class Character {
       this.horizontalCollisionWithPlatforms();
       this.horizontalCollisionWithMovingPlatforms();
       this.horizontalCollisionWithBlock();
+      this.horizontalCollisionWithPool();
       this.applyGravity();
       this.verticalCollisionWithPlatforms();
       this.verticalCollisionWithMovingPlatforms();
       this.verticalCollisionWithBlock();
+      this.verticalCollisionWithPool();
     }
   }
+
   /**
    * check if the character is grounded or not and set vy to a fixed value if it is grounded when user triggers the jump mechanism
    */
   jump() {
     if (this.element == "fire") {
       fireboyMovement.isGrounded = false;
-      this.vy = -8;
+      this.vy = -10;
       fbJump.play();
     } else {
       watergirlMovement.isGrounded = false;
-      this.vy = -8;
+      this.vy = -10;
       wgJump.play();
     }
   }
@@ -183,32 +188,75 @@ class Character {
   //   }
   // }
 
-  collisionWithPools(pool) {
-    if (detectCollision({ object1: this, object2: pool })) {
-      if (this.element == "fire") {
-        if (pool.type == "fire") {
-          if (this.vy > 0) {
-            this.vy = 0;
-            this.position.y = pool.position.y - this.height - 0.01;
-          }
-        } else {
-          this.isDead = true;
-          death.play();
-          gameLost = true;
+  horizontalCollisionWithPool() {
+    for (let i = 0; i < poolArray.length; i++) {
+      let pool = poolArray[i];
+      if (detectCollision({ object1: this, object2: pool })) {
+        if (this.vx < 0) {
+          this.vx = 0;
+          this.position.x = pool.position.x + pool.width + 0.01;
         }
-      } else {
-        if (pool.type == "water") {
-          this.vy = 0;
-          watergirlMovement.isGrounded = true;
-          this.position.y = pool.position.y - this.height - 0.01;
-        } else {
-          this.isDead = true;
-          death.play();
-          gameLost = true;
+        if (this.vx > 0) {
+          this.vx = 0;
+          this.position.x = pool.position.x - this.width - 0.01;
         }
       }
     }
   }
+
+  verticalCollisionWithPool() {
+    for (let i = 0; i < poolArray.length; i++) {
+      let pool = poolArray[i];
+      if (detectCollision({ object1: this, object2: pool })) {
+        console.log(this.vy, "vy");
+        if (this.vy < 0) {
+          this.vy = 0;
+          this.position.y = pool.position.y + pool.height + 0.01;
+        }
+        if (this.vy > 0) {
+          this.vy = 0;
+          if (this.element == pool.type) {
+            this.position.y = pool.position.y - this.height - 0.01;
+          } else {
+            this.position.y = 2000;
+            this.isDead = true;
+            death.play();
+            gameLost = true;
+          }
+          this.element == "fire"
+            ? (fireboyMovement.isGrounded = true)
+            : (watergirlMovement.isGrounded = true);
+        }
+      }
+    }
+  }
+
+  // collisionWithPools(pool) {
+  //   if (detectCollision({ object1: this, object2: pool })) {
+  //     if (this.element == "fire") {
+  //       if (pool.type == "fire") {
+  //         if (this.vy > 0) {
+  //           this.vy = 0;
+  //           this.position.y = pool.position.y - this.height - 0.01;
+  //         }
+  //       } else {
+  //         this.isDead = true;
+  //         death.play();
+  //         gameLost = true;
+  //       }
+  //     } else {
+  //       if (pool.type == "water") {
+  //         this.vy = 0;
+  //         watergirlMovement.isGrounded = true;
+  //         this.position.y = pool.position.y - this.height - 0.01;
+  //       } else {
+  //         this.isDead = true;
+  //         death.play();
+  //         gameLost = true;
+  //       }
+  //     }
+  //   }
+  // }
 
   // collisionWithPushers(pusher) {
   //   if (detectCollision({ object1: this, object2: pusher })) {

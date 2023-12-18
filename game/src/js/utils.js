@@ -1,88 +1,250 @@
-const fireboyMovement = {
-  right: false,
-  left: false,
-  isGrounded: true,
-};
+let gameWon = false;
+let gameOver = false;
 
-const watergirlMovement = {
-  right: false,
-  left: false,
-  isGrounded: true,
-};
+let fireBoy;
+let waterGirl;
 
+function animate() {
+  if (gameStart) {
+    // console.log("animation");
+    characters.forEach((character) => {
+      if (character.element == "fire") fireBoy = character;
+      else waterGirl = character;
+    });
+    ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+    ctx.drawImage(background, 0, 0, myCanvas.width, myCanvas.height);
+    doorArray.forEach((door) => {
+      door.drawDoors();
+      if (fireBoy && waterGirl) {
+        door.isOpen(fireBoy);
+        door.isOpen(waterGirl);
+      }
+    });
+
+    if (doorArray.length > 0) {
+      if (doorArray[0].open && doorArray[1].open) {
+        gameWon = true;
+        fireBoy.position.x = 2000;
+        waterGirl.position.x = 2000;
+      }
+    }
+
+    if (fireBoy && waterGirl) {
+      fireBoy.draw();
+      waterGirl.draw();
+    }
+
+    for (let i = 0; i < poolArray.length; i++) {
+      poolArray[i].drawPool();
+      if (fireBoy && waterGirl) {
+        // fireBoy.collisionWithPools(poolArray[i]);
+        // waterGirl.collisionWithPools(poolArray[i]);
+      }
+    }
+
+    for (let i = 0; i < pushersArray.length; i++) {
+      pushersArray[i].drawPusher();
+
+      if (fireBoy && waterGirl) {
+        const isFireBoyColliding = detectCollision({
+          object1: fireBoy,
+          object2: pushersArray[i],
+        });
+        const isWaterGirlColliding = detectCollision({
+          object1: waterGirl,
+          object2: pushersArray[i],
+        });
+        const isBlockColliding = blockArray.some((block) =>
+          detectCollision({ object1: block, object2: pushersArray[i] })
+        );
+
+        if (isFireBoyColliding || isWaterGirlColliding || isBlockColliding) {
+          pushersArray[i].pusherPushed();
+        } else {
+          pushersArray[i].pusherNotPushed();
+        }
+      }
+
+      if (pushersArray[i].position.y <= pushersArray[i].originalY)
+        pushersArray[i].pusherSoundDisabled = false;
+    }
+
+    leverArray.forEach((lever) => {
+      lever.checkOverlapWithCharacter(fireBoy);
+      lever.checkOverlapWithCharacter(waterGirl);
+      lever.update();
+    });
+
+    movingPlatformsArray
+      .filter((platform) => {
+        return platform.trigger == "pusher";
+      })
+      .forEach((platform) => {
+        platform.drawPlatform();
+        let matchingPushers = pushersArray.filter((pusher) => {
+          return pusher.color === platform.color && pusher.isPushed;
+        });
+        if (matchingPushers.length > 0) {
+          matchingPushers.forEach(() => {
+            platform.movePlatform(true);
+          });
+        } else {
+          platform.movePlatform(false);
+        }
+      });
+
+    movingPlatformsArray
+      .filter((platform) => {
+        return platform.trigger == "lever";
+      })
+      .forEach((platform) => {
+        platform.drawPlatform();
+        let matchingLevers = leverArray.filter((lever) => {
+          return lever.color === platform.color && lever.isActive;
+        });
+        if (matchingLevers.length > 0) {
+          matchingLevers.forEach(() => {
+            platform.movePlatform(true);
+          });
+        } else {
+          platform.movePlatform(false);
+        }
+      });
+
+    // blockArray.forEach((block) => {
+    //   block.update();
+    //   pushersArray.forEach((pusher) => {
+    //     if (detectCollision({ object1: block, object2: pusher })) {
+    //       pusher.pusherPushed();
+    //     }
+    //   });
+    // });
+
+    if (diamondsArray.length > 0) {
+      diamondsArray.forEach((dia, i) => {
+        dia.update();
+        if (fireBoy && waterGirl) {
+          dia.collisionWithCharacter(fireBoy, i);
+          dia.collisionWithCharacter(waterGirl, i);
+        }
+      });
+    }
+    if (fireBoy && waterGirl) {
+      fireBoy.update();
+      waterGirl.update();
+    }
+  }
+
+  ctx.drawImage(timerImage, 520, 0, 200, 100);
+  ctx.font = "30px Arial";
+  ctx.fillStyle = "yellow";
+  ctx.fillText(displayTime, 585, 40);
+
+  let animationId = requestAnimationFrame(animate);
+  if (gameOver) {
+    clearInterval(timerInterval);
+    setTimeout(() => {
+      cancelAnimationFrame(animationId);
+      calculateScore();
+      let matchingScoreImage;
+      scoreImages.forEach((img) => {
+        img.classList.remove("active");
+        if (img.dataset.id == scoreStatus) matchingScoreImage = img;
+      });
+      matchingScoreImage?.classList.add("active");
+      scoreBoard.style.display = "block";
+      scoreBoard.querySelector("#retry").classList.remove("active");
+      scoreBoard.querySelector("#continue").classList.add("active");
+    }, 1000);
+  }
+
+  if (gameLost) {
+    clearInterval(timerInterval);
+    setTimeout(() => {
+      cancelAnimationFrame(animationId);
+      scoreImages.forEach((img) => {
+        img.classList.remove("active");
+        img.dataset.id == 0 ? img.classList.add("active") : "";
+      });
+      scoreBoard.style.display = "block";
+      scoreBoard.querySelector("#continue").classList.remove("active");
+      scoreBoard.querySelector("#retry").classList.add("active");
+    }, 1000);
+  }
+}
+
+animate();
+
+function calculateScore() {
+  if (diamondsArray.length == 0 && seconds <= 90) {
+    scoreStatus = 1;
+  } else if (diamondsArray.length !== 0 && seconds <= 90) {
+    scoreStatus = 2;
+  } else if (diamondsArray.length !== 0 && seconds > 90) {
+    scoreStatus = 3;
+  } else {
+    scoreStatus = 4;
+  }
+}
+
+//listen for the jumping event triggered by the player
 document.addEventListener("keydown", (e) => {
-  switch (e.key) {
-    case "ArrowRight":
-      fireboyMovement.right = true;
-      fbCurrentAnimationFrames = fireboyRightRun;
-      break;
-    case "ArrowLeft":
-      fireboyMovement.left = true;
-      fbCurrentAnimationFrames = fireboyRunLeft;
-      break;
-    case "d":
-      watergirlMovement.right = true;
-      wgCurrentAnimationFrames = watergirlRunRight;
-      break;
-    case "a":
-      watergirlMovement.left = true;
-      wgCurrentAnimationFrames = watergirlLeftRun;
-      break;
+  if (e.key == "ArrowUp") {
+    if (fireboyMovement.isGrounded) {
+      fireBoy.jump();
+    }
+  }
+  if (e.key == "w") {
+    if (watergirlMovement.isGrounded) {
+      waterGirl.jump();
+    }
   }
 });
 
-document.addEventListener("keyup", (e) => {
-  switch (e.key) {
-    case "ArrowRight":
-      fireboyMovement.right = false;
-      fbAnimationFrame = 0;
-      break;
-    case "ArrowLeft":
-      fireboyMovement.left = false;
-      fbAnimationFrame = 0;
-      break;
-    case "d":
-      watergirlMovement.right = false;
-      wgAnimationFrame = 0;
-    case "a":
-      watergirlMovement.left = false;
-      wgAnimationFrame = 0;
-      break;
+function resetGame() {
+  // Reset all relevant game state variables to their initial values
+  gameWon = false;
+  gameOver = false;
+  gameLost = false;
+  gameStart = true;
+  scoreStatus = 1;
+  seconds = 0;
+  displayTime = "00:00";
+  clearInterval(timerInterval);
+  leverArray = [];
+  movingPlatformsArray = [];
+  doorArray = [];
+  diamondsArray = [];
+  platformArray = [];
+  blockArray = [];
+  pushersArray = [];
+  poolArray = [];
+  // Clear any existing animations or intervals
+  // cancelAnimationFrame(animationId);
+  tile.draw(maps[currentLevel - 1]);
+  startTimer();
+
+  // Call the animation function to restart the game loop
+  animate();
+}
+
+scoreBoard.addEventListener("mousedown", (e) => {
+  if (e.target.getAttribute("id") === "continue") {
+    myCanvas.style.display = "none";
+    scoreBoard.style.display = "none";
+    levelSelector.style.display = "block";
+    levelSound.pause();
+    introSound.play();
+    resetGame();
+  } else if (e.target.getAttribute("id") === "exit") {
+    myCanvas.style.display = "none";
+    scoreBoard.style.display = "none";
+    menu.style.display = "block";
+    levelSound.pause();
+    introSound.play();
+    resetGame();
+  } else if (e.target.getAttribute("id") === "retry") {
+    scoreBoard.style.display = "none";
+    resetGame();
   }
 });
-
-function detectCollision({ object1, object2 }) {
-  return (
-    object1.position.y + object1.height >= object2.position.y &&
-    object1.position.x <= object2.position.x + object2.width &&
-    object1.position.x + object1.width >= object2.position.x &&
-    object1.position.y <= object2.position.y + object2.height
-  );
-}
-
-/**
- * cropbox to crop a fixed area from a spritesheet from (x, y)
- */
-const cropbox = {
-  position: {
-    x: 0,
-    y: 0,
-  },
-  width: 0,
-  height: 0,
-};
-
-/**'
- * @param {number} position
- * @param {number} width
- * @param {number} height
- */
-function setCropboxAttributes({ position, width, height }) {
-  cropbox.position = position;
-  cropbox.width = width;
-  cropbox.height = height;
-}
-
-function randomNumGenerator(min, max) {
-  return min + Math.floor(Math.random() * (max - min + 1));
-}
