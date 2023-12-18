@@ -12,8 +12,8 @@ class MovingPlatforms {
     this.image = new Image();
     this.image.src =
       this.trigger == "pusher"
-        ? "../../../spritesheet/mechanisms/purplePlatform.png"
-        : "../../../spritesheet/mechanisms/yellowPlatform.png";
+        ? "./../../../spritesheet/mechanisms/purplePlatform.png"
+        : "./../../../spritesheet/mechanisms/yellowPlatform.png";
     this.active = false;
   }
 

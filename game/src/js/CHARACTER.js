@@ -8,8 +8,8 @@ class Character {
     this.image = new Image();
     this.image.src =
       this.element == "fire"
-        ? "../../../spritesheet/characters/fb.png"
-        : "../../../spritesheet/characters/wg.png";
+        ? "/../../../spritesheet/characters/fb.png"
+        : "/../../../spritesheet/characters/wg.png";
     this.color = this.element == "fire" ? "red" : "blue";
     this.vx = SPEEDX;
     this.vy = SPEEDY;
