@@ -317,7 +317,8 @@ saveBtn.addEventListener("mousedown", () => {
   availableLevels++;
 
   mapEditor.style.display = "none";
-  levelSelector.style.display = "block";
+  levelSelector.style.display = "none";
+  menu.style.display = "block";
 });
 
 clearCanvas.addEventListener("mousedown", (e) => {
