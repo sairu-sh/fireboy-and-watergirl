@@ -8,8 +8,8 @@ class Character {
     this.image = new Image();
     this.image.src =
       this.element == "fire"
-        ? "/../../../spritesheet/characters/fb.png"
-        : "/../../../spritesheet/characters/wg.png";
+        ? "/fireboy-and-watergirl/spritesheet/characters/fb.png"
+        : "/fireboy-and-watergirl/spritesheet/characters/wg.png";
     this.color = this.element == "fire" ? "red" : "blue";
     this.vx = SPEEDX;
     this.vy = SPEEDY;
@@ -290,7 +290,7 @@ class Character {
 
   setFireboyCropbox() {
     if (this.isDead) {
-      this.image.src = "./../spritesheet/characters/die.png";
+      this.image.src = "/fireboy-and-watergirl/spritesheet/characters/die.png";
       setCropboxAttributes({
         position: {
           x: 0,
@@ -387,7 +387,7 @@ class Character {
 
   setWatergirlCropbox() {
     if (this.isDead) {
-      this.image.src = "./../spritesheet/characters/die.png";
+      this.image.src = "/fireboy-and-watergirl/spritesheet/characters/die.png";
       setCropboxAttributes({
         position: {
           x: 0,

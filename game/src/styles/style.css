@@ -147,7 +147,7 @@
   justify-content: flex-start;
   gap: 50px;
   flex-wrap: wrap;
-  background-image: url("./../spritesheet/intro/TempleHallForest.jpg");
+  background-image: url("/spritesheet/background.svg");
   /* justify-content: space-between; */
 }
 
