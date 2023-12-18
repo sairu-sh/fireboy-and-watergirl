@@ -28,7 +28,7 @@ class Doors {
     if (gameWon && !gameOver) {
       door.play();
       if (this.element == "fire") {
-        this.image.src = "./../../../spritesheet/doors/fbDoor.png";
+        this.image.src = "./../../spritesheet/doors/fbDoor.png";
         this.fbDoorAnimation();
       } else {
         this.image.src = "./../../spritesheet/doors/wgDoor.png";
