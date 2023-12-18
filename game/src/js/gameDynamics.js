@@ -31,19 +31,19 @@ function createAudio(path, loop = false) {
 }
 
 function setMusic() {
-  const defaultPath = "./../../../music/HD - Absolute Silence Sound Effect.mp3";
+  const defaultPath = "./../../music/HD - Absolute Silence Sound Effect.mp3";
 
   if (musicEnabled) {
-    introSound = createAudio("./../../../music/IntroMusic.wav", true);
-    levelSound = createAudio("./../../../music/LevelMusic.wav", true);
-    coinCollected = createAudio("./../../../music/coinCollect.ogg");
-    death = createAudio("./../../../music/death.ogg");
-    fbJump = createAudio("./../../../music/fireboyJump.ogg");
-    wgJump = createAudio("./../../../music/watergirlJump.ogg");
-    door = createAudio("./../../../music/Door.mp3");
-    lever = createAudio("./../../../music/Lever.mp3");
-    pusher = createAudio("./../../../music/Pusher.mp3");
-    platform = createAudio("./../../../music/Platform.mp3");
+    introSound = createAudio("./../../music/IntroMusic.wav", true);
+    levelSound = createAudio("./../../music/LevelMusic.wav", true);
+    coinCollected = createAudio("./../../music/coinCollect.ogg");
+    death = createAudio("./../../music/death.ogg");
+    fbJump = createAudio("./../../music/fireboyJump.ogg");
+    wgJump = createAudio("./../../music/watergirlJump.ogg");
+    door = createAudio("./../../music/Door.mp3");
+    lever = createAudio("./../../music/Lever.mp3");
+    pusher = createAudio("./../../music/Pusher.mp3");
+    platform = createAudio("./../../music/Platform.mp3");
   } else {
     introSound = createAudio(defaultPath);
     levelSound = createAudio(defaultPath);

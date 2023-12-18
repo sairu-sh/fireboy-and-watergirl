@@ -290,7 +290,7 @@ class Character {
 
   setFireboyCropbox() {
     if (this.isDead) {
-      this.image.src = "../../../spritesheet/characters/die.png";
+      this.image.src = "./../../spritesheet/characters/die.png";
       setCropboxAttributes({
         position: {
           x: 0,
@@ -387,7 +387,7 @@ class Character {
 
   setWatergirlCropbox() {
     if (this.isDead) {
-      this.image.src = "../../../spritesheet/characters/die.png";
+      this.image.src = "./../../spritesheet/characters/die.png";
       setCropboxAttributes({
         position: {
           x: 0,

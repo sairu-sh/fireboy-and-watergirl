@@ -7,13 +7,13 @@ class Pool {
     this.image = new Image();
     switch (this.type) {
       case "water":
-        this.image.src = "./../../../spritesheet/pools/waterpool.svg";
+        this.image.src = "./../../spritesheet/pools/waterpool.svg";
         break;
       case "fire":
-        this.image.src = "./../../../spritesheet/pools/lavapool.svg";
+        this.image.src = "./../../spritesheet/pools/lavapool.svg";
         break;
       case "goo":
-        this.image.src = "./../../../spritesheet/pools/goo.svg";
+        this.image.src = "./../../spritesheet/pools/goo.svg";
         break;
     }
     // this.boundingPlatform = new Platform({
