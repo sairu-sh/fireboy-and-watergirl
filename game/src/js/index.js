@@ -43,8 +43,8 @@ function animate() {
     if (doorArray.length > 0) {
       if (doorArray[0].open && doorArray[1].open) {
         gameWon = true;
-        fireBoy.position.x = 2000;
-        waterGirl.position.x = 2000;
+        fireBoy.width = 0;
+        waterGirl.width = 0;
       }
     }
 
@@ -55,10 +55,10 @@ function animate() {
 
     for (let i = 0; i < poolArray.length; i++) {
       poolArray[i].drawPool();
-      if (fireBoy && waterGirl) {
-        // fireBoy.collisionWithPools(poolArray[i]);
-        // waterGirl.collisionWithPools(poolArray[i]);
-      }
+      // if (fireBoy && waterGirl) {
+      //   // fireBoy.collisionWithPools(poolArray[i]);
+      //   // waterGirl.collisionWithPools(poolArray[i]);
+      // }
     }
 
     for (let i = 0; i < pushersArray.length; i++) {
