@@ -6,6 +6,25 @@ let waterGirl;
 
 function animate() {
   if (gameStart) {
+    maps = [];
+    maps.push(map1);
+    maps.push(map2);
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      const value = JSON.parse(localStorage.getItem(key));
+      maps.push(value);
+    }
+
+    const levelContainer = document.getElementById("level-container");
+    levelContainer.innerHTML = "";
+    maps.forEach((_, i) => {
+      let levelHtml = `
+          <div class="level">
+            <button data-id="${i + 1}">Level ${i + 1}</button>
+          </div>`;
+      levelContainer.insertAdjacentHTML("beforeend", levelHtml);
+      availableLevels++;
+    });
     // console.log("animation");
     characters.forEach((character) => {
       if (character.element == "fire") fireBoy = character;
@@ -143,33 +162,29 @@ function animate() {
   let animationId = requestAnimationFrame(animate);
   if (gameOver) {
     clearInterval(timerInterval);
-    setTimeout(() => {
-      cancelAnimationFrame(animationId);
-      calculateScore();
-      let matchingScoreImage;
-      scoreImages.forEach((img) => {
-        img.classList.remove("active");
-        if (img.dataset.id == scoreStatus) matchingScoreImage = img;
-      });
-      matchingScoreImage?.classList.add("active");
-      scoreBoard.style.display = "block";
-      scoreBoard.querySelector("#retry").classList.remove("active");
-      scoreBoard.querySelector("#continue").classList.add("active");
-    }, 1000);
+    cancelAnimationFrame(animationId);
+    calculateScore();
+    let matchingScoreImage;
+    scoreImages.forEach((img) => {
+      img.classList.remove("active");
+      if (img.dataset.id == scoreStatus) matchingScoreImage = img;
+    });
+    matchingScoreImage?.classList.add("active");
+    scoreBoard.style.display = "block";
+    scoreBoard.querySelector("#retry").classList.remove("active");
+    scoreBoard.querySelector("#continue").classList.add("active");
   }
 
   if (gameLost) {
     clearInterval(timerInterval);
-    setTimeout(() => {
-      cancelAnimationFrame(animationId);
-      scoreImages.forEach((img) => {
-        img.classList.remove("active");
-        img.dataset.id == 0 ? img.classList.add("active") : "";
-      });
-      scoreBoard.style.display = "block";
-      scoreBoard.querySelector("#continue").classList.remove("active");
-      scoreBoard.querySelector("#retry").classList.add("active");
-    }, 1000);
+    cancelAnimationFrame(animationId);
+    scoreImages.forEach((img) => {
+      img.classList.remove("active");
+      img.dataset.id == 0 ? img.classList.add("active") : "";
+    });
+    scoreBoard.style.display = "block";
+    scoreBoard.querySelector("#continue").classList.remove("active");
+    scoreBoard.querySelector("#retry").classList.add("active");
   }
 }
 
@@ -237,12 +252,13 @@ scoreBoard.addEventListener("mousedown", (e) => {
     introSound.play();
     resetGame();
   } else if (e.target.getAttribute("id") === "exit") {
-    myCanvas.style.display = "none";
-    scoreBoard.style.display = "none";
-    menu.style.display = "block";
-    levelSound.pause();
-    introSound.play();
-    resetGame();
+    // myCanvas.style.display = "none";
+    // scoreBoard.style.display = "none";
+    // menu.style.display = "block";
+    // levelSound.pause();
+    // introSound.play();
+    // resetGame();
+    location.reload();
   } else if (e.target.getAttribute("id") === "retry") {
     scoreBoard.style.display = "none";
     resetGame();
