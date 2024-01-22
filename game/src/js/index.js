@@ -5,12 +5,45 @@ let fireBoy;
 let waterGirl;
 
 function animate() {
+  maps = [];
+  maps.push(map2);
+  maps.push(map1);
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    const value = JSON.parse(localStorage.getItem(key));
+    maps.push(value);
+  }
+
+  const levelContainer = document.getElementById("level-container");
+  levelContainer.innerHTML = "";
+  maps.forEach((_, i) => {
+    let levelHtml = `
+        <div class="level">
+          <button data-id="${i + 1}">Level ${i + 1}</button>
+        </div>`;
+    levelContainer.insertAdjacentHTML("beforeend", levelHtml);
+    availableLevels++;
+  });
   if (gameStart) {
-    // console.log("animation");
     characters.forEach((character) => {
       if (character.element == "fire") fireBoy = character;
       else waterGirl = character;
     });
+
+    if (fireBoy && waterGirl) {
+      if (
+        fireBoy.position.x > myCanvas.width ||
+        fireBoy.position.y > myCanvas.height ||
+        fireBoy.position.x < 0 ||
+        fireBoy.position.y < 0 ||
+        waterGirl.position.x > myCanvas.width ||
+        waterGirl.position.y > myCanvas.height ||
+        waterGirl.position.x < 0 ||
+        waterGirl.position.y < 0
+      )
+        gameLost = true;
+    }
+
     ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
     ctx.drawImage(background, 0, 0, myCanvas.width, myCanvas.height);
     doorArray.forEach((door) => {
@@ -24,8 +57,8 @@ function animate() {
     if (doorArray.length > 0) {
       if (doorArray[0].open && doorArray[1].open) {
         gameWon = true;
-        fireBoy.position.x = 2000;
-        waterGirl.position.x = 2000;
+        fireBoy.width = 0;
+        waterGirl.width = 0;
       }
     }
 
@@ -36,10 +69,6 @@ function animate() {
 
     for (let i = 0; i < poolArray.length; i++) {
       poolArray[i].drawPool();
-      if (fireBoy && waterGirl) {
-        fireBoy.collisionWithPools(poolArray[i]);
-        waterGirl.collisionWithPools(poolArray[i]);
-      }
     }
 
     for (let i = 0; i < pushersArray.length; i++) {
@@ -233,12 +262,13 @@ scoreBoard.addEventListener("mousedown", (e) => {
     introSound.play();
     resetGame();
   } else if (e.target.getAttribute("id") === "exit") {
-    myCanvas.style.display = "none";
-    scoreBoard.style.display = "none";
-    menu.style.display = "block";
-    levelSound.pause();
-    introSound.play();
-    resetGame();
+    // myCanvas.style.display = "none";
+    // scoreBoard.style.display = "none";
+    // menu.style.display = "block";
+    // levelSound.pause();
+    // introSound.play();
+    // resetGame();
+    location.reload();
   } else if (e.target.getAttribute("id") === "retry") {
     scoreBoard.style.display = "none";
     resetGame();

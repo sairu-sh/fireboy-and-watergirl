@@ -10,7 +10,7 @@
 .intro {
   width: 100%;
   /* display: flex; */
-  display: none;
+  /* display: none; */
 }
 
 .container {
@@ -134,7 +134,7 @@
 }
 
 .level-selector {
-  /* display: none; */
+  display: none;
 }
 
 .level-selector .container {

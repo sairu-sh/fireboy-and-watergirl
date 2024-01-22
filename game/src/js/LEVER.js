@@ -104,7 +104,6 @@ class Lever {
         this.handleX.position.x <=
         this.position.x + this.width * 0.8
       ) {
-        console.log("hi");
         setCropboxAttributes({
           position: {
             x: 510,

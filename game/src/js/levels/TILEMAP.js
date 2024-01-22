@@ -403,21 +403,4 @@ class TileMap {
 }
 let tileSize = 32;
 let tile = new TileMap(tileSize);
-let maps = [];
-maps.push(map1);
-maps.push(map2);
-for (let i = 0; i < localStorage.length; i++) {
-  const key = localStorage.key(i);
-  const value = JSON.parse(localStorage.getItem(key));
-  maps.push(value);
-}
-
-const levelContainer = document.getElementById("level-container");
-maps.forEach((_, i) => {
-  let levelHtml = `
-        <div class="level">
-          <button data-id="${i + 1}">Level ${i + 1}</button>
-        </div>`;
-  levelContainer.insertAdjacentHTML("beforeend", levelHtml);
-  availableLevels++;
-});
+let maps;

@@ -25,6 +25,7 @@ class Character {
      * x-axis movement
      */
     if (this.element == "fire") {
+      console.log(this.isPushingBlock);
       if (!fireboyMovement.right && !fireboyMovement.left) fireBoy.vx = 0;
       if (fireboyMovement.right)
         this.isPushingBlock ? (fireBoy.vx = 2) : (fireBoy.vx = SPEEDX);
@@ -34,10 +35,12 @@ class Character {
       this.horizontalCollisionWithPlatforms();
       this.horizontalCollisionWithMovingPlatforms();
       this.horizontalCollisionWithBlock();
+      this.horizontalCollisionWithPool();
       this.applyGravity();
       this.verticalCollisionWithPlatforms();
       this.verticalCollisionWithMovingPlatforms();
       this.verticalCollisionWithBlock();
+      this.verticalCollisionWithPool();
     } else {
       if (!watergirlMovement.right && !watergirlMovement.left) waterGirl.vx = 0;
       if (watergirlMovement.right)
@@ -53,7 +56,7 @@ class Character {
       this.verticalCollisionWithPlatforms();
       this.verticalCollisionWithMovingPlatforms();
       this.verticalCollisionWithBlock();
-      this.horizontalCollisionWithPool();
+      this.verticalCollisionWithPool();
     }
   }
   /**
@@ -62,11 +65,11 @@ class Character {
   jump() {
     if (this.element == "fire") {
       fireboyMovement.isGrounded = false;
-      this.vy = -8;
+      this.vy = -10;
       fbJump.play();
     } else {
       watergirlMovement.isGrounded = false;
-      this.vy = -8;
+      this.vy = -10;
       wgJump.play();
     }
   }
@@ -75,27 +78,9 @@ class Character {
    * add gravity to the character after it jumps to make it fall after it reaches a certain height
    */
   applyGravity() {
-    // if (this.element == "fire") {
-    // if (!fireboyMovement.isGrounded) {
     this.position.y += this.vy;
     this.vy += GRAVITY;
-    // }
-    // } else {
-    // if (!watergirlMovement.isGrounded) {
-    // this.vy += GRAVITY;
-    // }
-    // }
   }
-
-  // collisionWithEdgeWalls() {
-  //   if (this.position.x + this.width >= myCanvas.width)
-  //     this.position.x = myCanvas.width - this.width;
-  //   if (this.position.x < 0) this.position.x = 0;
-  // }
-
-  // collisionWithPlatforms(platform) {
-  //   this.verticalCollisionWithPlatforms(platform);
-  // }
 
   horizontalCollisionWithPlatforms() {
     for (let i = 0; i < platformArray.length; i++) {
@@ -157,6 +142,10 @@ class Character {
           this.vy = 0;
           this.position.y = platform.position.y + platform.height + 0.01;
         }
+        // if (this.vy == 0 || this.vy == 0.4) {
+        //   platform.position.y = this.position.y - platform.height - 0.01;
+        //   this.position.y = platform.position.y + platform.height + 0.01;
+        // }
         if (this.vy > 0) {
           this.vy = 0;
           this.position.y = platform.position.y - this.height - 0.01;
@@ -164,10 +153,6 @@ class Character {
             ? (fireboyMovement.isGrounded = true)
             : (watergirlMovement.isGrounded = true);
         }
-        // if (platform.vy > 0) {
-        //   platform.vy = 0;
-        //   platform.position.y = this.position.y - platform.height - 0.01;
-        // }
       }
     }
   }
@@ -186,8 +171,47 @@ class Character {
   // }
 
   horizontalCollisionWithPool() {
-    poolArray.forEach((pool) => {});
+    for (let i = 0; i < poolArray.length; i++) {
+      let pool = poolArray[i];
+      if (detectCollision({ object1: this, object2: pool })) {
+        if (this.vx < 0) {
+          this.vx = 0;
+          this.position.x = pool.position.x + pool.width + 0.01;
+        }
+        if (this.vx > 0) {
+          this.vx = 0;
+          this.position.x = pool.position.x - this.width - 0.01;
+        }
+      }
+    }
   }
+
+  verticalCollisionWithPool() {
+    for (let i = 0; i < poolArray.length; i++) {
+      let pool = poolArray[i];
+      if (detectCollision({ object1: this, object2: pool })) {
+        if (this.vy < 0) {
+          this.vy = 0;
+          this.position.y = pool.position.y + pool.height + 0.01;
+        }
+        if (this.vy > 0) {
+          this.vy = 0;
+          if (this.element == pool.type) {
+            this.position.y = pool.position.y - this.height - 0.01;
+          } else {
+            this.position.y = 2000;
+            this.isDead = true;
+            death.play();
+            gameLost = true;
+          }
+          this.element == "fire"
+            ? (fireboyMovement.isGrounded = true)
+            : (watergirlMovement.isGrounded = true);
+        }
+      }
+    }
+  }
+
   // collisionWithPools(pool) {
   //   if (detectCollision({ object1: this, object2: pool })) {
   //     if (this.element == "fire") {

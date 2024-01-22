@@ -72,10 +72,11 @@ class Doors {
     this.frameCounter = (this.frameCounter + 1) % framesPerUpdate;
 
     if (this.frameCounter === 0) {
-      currentFbDoor =
-        currentFbDoor >= fbDoorAnimationFrames.length - 1
-          ? (gameOver = true)
-          : currentFbDoor + 1;
+      if (currentFbDoor >= fbDoorAnimationFrames.length - 1) {
+        currentFbDoor = fbDoorAnimationFrames.length - 1;
+        gameWon = true;
+        gameOver = true;
+      } else currentFbDoor++;
     }
   }
 
@@ -85,7 +86,10 @@ class Doors {
       this.frameCounter = (this.frameCounter + 1) % 15;
 
       if (this.frameCounter === 0) {
-        currentWgDoor++;
+        if (currentWgDoor >= wgDoorAnimationFrames.length - 1) {
+          currentWgDoor = wgDoorAnimationFrames.length - 1;
+          return;
+        } else currentWgDoor++;
       }
     }
   }
