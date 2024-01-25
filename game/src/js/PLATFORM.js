@@ -5,7 +5,7 @@ class Platform {
     this.height = height;
     this.image = new Image();
     const blockNum = randomNumGenerator(1, 8);
-    this.image.src = `./../../..//spritesheet/groundBlocks/block${blockNum}.svg`;
+    this.image.src = `/fireboy-and-watergirl/spritesheet/groundBlocks/block${blockNum}.svg`;
   }
   drawPlatform() {
     ctx.drawImage(

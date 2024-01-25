@@ -1,5 +1,5 @@
 let background = new Image();
-background.src = "./../../../spritesheet/background.svg";
+background.src = "/fireboy-and-watergirl/spritesheet/background.svg";
 
 let timerImage = new Image();
-timerImage.src = "./../../../spritesheet/text/timer.png";
+timerImage.src = "/fireboy-and-watergirl/spritesheet/text/timer.png";

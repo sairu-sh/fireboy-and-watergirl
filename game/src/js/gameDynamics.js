@@ -32,19 +32,25 @@ function createAudio(path, loop = false) {
 
 function setMusic() {
   const defaultPath =
-    "./../../..//music/HD - Absolute Silence Sound Effect.mp3";
+    "/fireboy-and-watergirl/music/HD - Absolute Silence Sound Effect.mp3";
 
   if (musicEnabled) {
-    introSound = createAudio("./../../..//music/IntroMusic.wav", true);
-    levelSound = createAudio("./../../..//music/LevelMusic.wav", true);
-    coinCollected = createAudio("./../../..//music/coinCollect.ogg");
-    death = createAudio("./../../..//music/death.ogg");
-    fbJump = createAudio("./../../..//music/fireboyJump.ogg");
-    wgJump = createAudio("./../../..//music/watergirlJump.ogg");
-    door = createAudio("./../../..//music/Door.mp3");
-    lever = createAudio("./../../..//music/Lever.mp3");
-    pusher = createAudio("./../../..//music/Pusher.mp3");
-    platform = createAudio("./../../..//music/Platform.mp3");
+    introSound = createAudio(
+      "/fireboy-and-watergirl/music/IntroMusic.wav",
+      true
+    );
+    levelSound = createAudio(
+      "/fireboy-and-watergirl/music/LevelMusic.wav",
+      true
+    );
+    coinCollected = createAudio("/fireboy-and-watergirl/music/coinCollect.ogg");
+    death = createAudio("/fireboy-and-watergirl/music/death.ogg");
+    fbJump = createAudio("/fireboy-and-watergirl/music/fireboyJump.ogg");
+    wgJump = createAudio("/fireboy-and-watergirl/music/watergirlJump.ogg");
+    door = createAudio("/fireboy-and-watergirl/music/Door.mp3");
+    lever = createAudio("/fireboy-and-watergirl/music/Lever.mp3");
+    pusher = createAudio("/fireboy-and-watergirl/music/Pusher.mp3");
+    platform = createAudio("/fireboy-and-watergirl/music/Platform.mp3");
   } else {
     introSound = createAudio(defaultPath);
     levelSound = createAudio(defaultPath);

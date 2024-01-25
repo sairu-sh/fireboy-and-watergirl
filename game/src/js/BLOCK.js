@@ -6,7 +6,7 @@ class Block {
     this.vx = 3;
     this.vy = 0;
     this.image = new Image();
-    this.image.src = "./../../..//spritesheet/block.svg";
+    this.image.src = "/fireboy-and-watergirl/spritesheet/block.svg";
   }
 
   update() {

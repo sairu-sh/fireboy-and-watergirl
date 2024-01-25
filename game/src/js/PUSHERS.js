@@ -8,7 +8,8 @@ class Pusher {
     this.isPushed = false;
     this.velocityY = 0;
     this.image = new Image();
-    this.image.src = "./../../..//spritesheet/mechanisms/purplePusher.svg";
+    this.image.src =
+      "/fireboy-and-watergirl/spritesheet/mechanisms/purplePusher.svg";
     this.pusherSoundDisabled = false;
   }
 

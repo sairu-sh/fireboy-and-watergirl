@@ -4,7 +4,7 @@ class Lever {
     this.color = color;
     this.isActive = false;
     this.image = new Image();
-    this.image.src = "./../../..//spritesheet/mechanisms/lever.png";
+    this.image.src = "/fireboy-and-watergirl/spritesheet/mechanisms/lever.png";
     this.trigger = trigger;
     this.width = 50;
     this.height = 32;

@@ -4,7 +4,7 @@ class Doors {
     this.width = width;
     this.height = height;
     this.image = new Image();
-    this.image.src = "./../../..//spritesheet/doors/doors.png";
+    this.image.src = "/fireboy-and-watergirl/spritesheet/doors/doors.png";
     this.element = element;
     this.open = false;
     this.boundingBox = {
@@ -28,10 +28,10 @@ class Doors {
     if (gameWon && !gameOver) {
       door.play();
       if (this.element == "fire") {
-        this.image.src = "./../../..//spritesheet/doors/fbDoor.png";
+        this.image.src = "/fireboy-and-watergirl/spritesheet/doors/fbDoor.png";
         this.fbDoorAnimation();
       } else {
-        this.image.src = "./../../..//spritesheet/doors/wgDoor.png";
+        this.image.src = "/fireboy-and-watergirl/spritesheet/doors/wgDoor.png";
         this.wgDoorAnimation();
       }
     } else {

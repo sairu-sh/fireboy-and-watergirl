@@ -181,69 +181,74 @@ function renderImage(value) {
   let height = 32;
   switch (value) {
     case 1:
-      src = "./../../..//spritesheet/mapEditor/block1 (1).png";
+      src = "/fireboy-and-watergirl/spritesheet/mapEditor/block1 (1).png";
       break;
     case 99:
-      src = "./../../..//spritesheet/mapEditor/FireBoy (1).png";
+      src = "/fireboy-and-watergirl/spritesheet/mapEditor/FireBoy (1).png";
       width = 50;
       height = 50;
       break;
     case 100:
-      src = "./../../..//spritesheet/mapEditor/WaterGirl (1).png";
+      src = "/fireboy-and-watergirl/spritesheet/mapEditor/WaterGirl (1).png";
       width = 50;
       height = 50;
       break;
     case 60:
-      src = "./../../..//spritesheet/mapEditor/fire_door (1).png";
+      src = "/fireboy-and-watergirl/spritesheet/mapEditor/fire_door (1).png";
       width = 96;
       height = 96;
       break;
     case 61:
-      src = "./../../..//spritesheet/mapEditor/water_door (1).png";
+      src = "/fireboy-and-watergirl/spritesheet/mapEditor/water_door (1).png";
       width = 96;
       height = 96;
       break;
     case 36:
-      src = "./../../..//spritesheet/mapEditor/fire_gem (1).png";
+      src = "/fireboy-and-watergirl/spritesheet/mapEditor/fire_gem (1).png";
       break;
     case 35:
-      src = "./../../..//spritesheet/mapEditor/water_gem (1).png";
+      src = "/fireboy-and-watergirl/spritesheet/mapEditor/water_gem (1).png";
       break;
     case 3:
-      src = "./../../..//spritesheet/mapEditor/fire_obstacle (1).png";
+      src =
+        "/fireboy-and-watergirl/spritesheet/mapEditor/fire_obstacle (1).png";
       width = 160;
       height = 32;
       break;
     case 2:
-      src = "./../../..//spritesheet/mapEditor/water_obstacle (1).png";
+      src =
+        "/fireboy-and-watergirl/spritesheet/mapEditor/water_obstacle (1).png";
       width = 160;
       height = 32;
       break;
     case 4:
-      src = "./../../..//spritesheet/mapEditor/poison_obstacle (1).png";
+      src =
+        "/fireboy-and-watergirl/spritesheet/mapEditor/poison_obstacle (1).png";
       width = 160;
       height = 32;
       break;
     case 5:
-      src = "./../../..//spritesheet/mapEditor/purplePusher.png";
+      src = "/fireboy-and-watergirl/spritesheet/mapEditor/purplePusher.png";
       break;
     case 19:
-      src = "./../../..//spritesheet/mapEditor/purplePlatform (1).png";
+      src =
+        "/fireboy-and-watergirl/spritesheet/mapEditor/purplePlatform (1).png";
       width = 128;
       height = 30;
       break;
     case 41:
-      src = "./../../..//spritesheet/mapEditor/lever (1).png";
+      src = "/fireboy-and-watergirl/spritesheet/mapEditor/lever (1).png";
       width = 50;
       height = 32;
       break;
     case 53:
-      src = "./../../..//spritesheet/mapEditor/yellowPlatform (1).png";
+      src =
+        "/fireboy-and-watergirl/spritesheet/mapEditor/yellowPlatform (1).png";
       width = 128;
       height = 30;
       break;
     case 30:
-      src = "./../../..//spritesheet/mapEditor/block (1).png";
+      src = "/fireboy-and-watergirl/spritesheet/mapEditor/block (1).png";
       width = 50;
       height = 50;
       break;

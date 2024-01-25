@@ -5,7 +5,7 @@ class Diamonds {
     this.originalY = this.position.y;
     this.vy = 0.5;
     this.image = new Image();
-    this.image.src = "./../../..//spritesheet/diamonds.svg";
+    this.image.src = "/fireboy-and-watergirl/spritesheet/diamonds.svg";
     this.width = 32;
     this.height = 32;
   }
